@@ -62,6 +62,9 @@ html, body {
   color: var(--md-sys-color-on-background);
   font-family: Figtree, Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* Material 3 Atmosferik Aydınlatma */
@@ -96,11 +99,11 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   height: 40px;
-  padding: 0 1.25rem;
+  padding: 0 1.1rem;
   border-radius: 9999px;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.01em;
   position: relative;
@@ -223,16 +226,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.25rem;
   height: 48px;
   border-radius: 9999px;
   color: var(--md-sys-color-on-surface-variant);
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   border: 0;
   background: none;
   cursor: pointer;
   transition: color 0.25s;
+  padding: 0 4px;
+}
+@media (min-width: 640px) {
+  .m3-segmented button {
+    gap: 0.4rem;
+    font-size: 0.88rem;
+  }
 }
 .m3-segmented button[aria-selected="true"] { color: var(--md-sys-color-on-secondary-container); }
 
@@ -297,13 +307,16 @@ body {
 .track-row {
   display: grid;
   grid-template-columns: 44px 1fr;
-  gap: 0.4rem 0.8rem;
+  gap: 0.35rem 0.6rem;
   align-items: center;
-  padding: 0.75rem 0.6rem;
+  padding: 0.6rem 0.5rem;
   border-radius: 18px;
   transition: background-color 0.2s;
   animation: m3-enter-anim 0.35s cubic-bezier(0.2, 0, 0, 1) both;
   animation-delay: calc(var(--d) * 25ms);
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 .track-row:hover { background-color: rgba(255, 255, 255, 0.04); }
 .track-row.is-active-preview {
@@ -334,12 +347,22 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem;
-  padding-left: calc(44px + 0.8rem);
+  gap: 0.35rem;
+  padding-left: 0;
+  width: 100%;
 }
 @media (min-width: 640px) {
-  .track-row { grid-template-columns: 44px 1fr auto; }
-  .track-acts { grid-column: auto; padding: 0; flex-wrap: nowrap; }
+  .track-row {
+    grid-template-columns: 44px 1fr auto;
+    padding: 0.75rem 0.6rem;
+    gap: 0.4rem 0.8rem;
+  }
+  .track-acts {
+    grid-column: auto;
+    padding: 0;
+    flex-wrap: nowrap;
+    width: auto;
+  }
 }
 
 /* Material 3 Chips & Badges */
@@ -376,7 +399,7 @@ body {
   z-index: 100;
   display: grid;
   place-items: center;
-  padding: 1rem;
+  padding: 0.75rem;
   animation: m3-scrim-in 0.2s ease;
 }
 @keyframes m3-scrim-in { from { opacity: 0; } }
@@ -387,8 +410,13 @@ body {
   width: min(100%, 540px);
   max-height: 90vh;
   overflow-y: auto;
-  padding: 1.75rem;
+  padding: 1.25rem;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+}
+@media (min-width: 640px) {
+  .m3-dialog {
+    padding: 1.75rem;
+  }
 }
 
 /* Material 3 Snackbar (Toasts) */
@@ -447,45 +475,45 @@ body {
   <symbol id="i-yt" viewBox="0 0 24 24"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="currentColor"/><path d="M10 8.9v6.2l5.3-3.1z" fill="var(--cut)"/></symbol>
 </svg>
 
-<main class="max-w-2xl mx-auto px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-24">
+<main class="max-w-2xl mx-auto px-3 sm:px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-24 w-full overflow-x-hidden">
 
   <!-- ===================================================================
        YENİLENMİŞ MATERIAL DESIGN 3 TOP APP BAR & HEADER
        =================================================================== -->
-  <header class="flex items-center justify-between mb-6 pb-2 border-b border-[var(--md-sys-color-outline-variant)]/20 m3-enter">
-    <div class="flex items-center gap-3">
+  <header class="flex items-center justify-between gap-2 mb-5 pb-3 border-b border-[var(--md-sys-color-outline-variant)]/20 m3-enter">
+    <div class="flex items-center gap-2.5 min-w-0">
       <!-- Modern Dalga / Köprü Logosu (M3 Container) -->
-      <div class="w-11 h-11 rounded-2xl grid place-items-center bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)] shadow-inner">
-        <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl grid place-items-center bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)] shrink-0 shadow-inner">
+        <svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
           <path d="M4 22h24M6 22c0-7.5 4.5-12 10-12s10 4.5 10 12M11 22v-5M16 22v-8M21 22v-5"/>
         </svg>
       </div>
-      <div>
-        <div class="flex items-center gap-2">
-          <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--md-sys-color-on-surface)] leading-tight">BridgeMusic</h1>
-          <span class="m3-chip text-[10px] h-5 px-2 bg-[var(--md-sys-color-surface-container-high)] text-[var(--md-sys-color-primary)]">PRO</span>
+      <div class="min-w-0">
+        <div class="flex items-center gap-1.5">
+          <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-[var(--md-sys-color-on-surface)] leading-none truncate">BridgeMusic</h1>
+          <span class="m3-chip text-[10px] h-4 sm:h-5 px-1.5 sm:px-2 bg-[var(--md-sys-color-surface-container-high)] text-[var(--md-sys-color-primary)] shrink-0">PRO</span>
         </div>
-        <p class="text-xs text-[var(--md-sys-color-on-surface-variant)] leading-tight mt-0.5">Spotify & YouTube Kesintisiz Oynatma Listesi Taşıyıcı</p>
+        <p class="hidden sm:block text-xs text-[var(--md-sys-color-on-surface-variant)] leading-tight mt-1 truncate">Spotify & YouTube Kesintisiz Oynatma Listesi Taşıyıcı</p>
       </div>
     </div>
 
     <!-- Sağ Üst Eylem Araçları (Minimal Telegram + Oturum & Ayarlar) -->
-    <div class="flex items-center gap-1.5 sm:gap-2">
+    <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
       <!-- Minimalist Telegram Hap Butonu -->
-      <a id="tg" href="https://t.me/BridgeMusic" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[var(--md-sys-color-surface-container-high)] hover:bg-[var(--md-sys-color-surface-container-highest)] text-[var(--md-sys-color-on-surface)] border border-[var(--md-sys-color-outline-variant)]/40 transition-colors" title="Telegram Kanalımız">
+      <a id="tg" href="https://t.me/BridgeMusic" target="_blank" rel="noopener" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold bg-[var(--md-sys-color-surface-container-high)] hover:bg-[var(--md-sys-color-surface-container-highest)] text-[var(--md-sys-color-on-surface)] border border-[var(--md-sys-color-outline-variant)]/40 transition-colors" title="Telegram Kanalımız">
         <span class="ms text-sm" style="color:#29b6f6">send</span>
-        <span class="hidden sm:inline">Kanal</span>
+        <span class="text-[11px] sm:text-xs">Kanal</span>
       </a>
 
       <!-- Oturum & Hesaplar Butonu -->
-      <button id="btn-accounts-open" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[var(--md-sys-color-secondary-container)] text-[var(--md-sys-color-on-secondary-container)] hover:opacity-90 transition-opacity">
+      <button id="btn-accounts-open" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold bg-[var(--md-sys-color-secondary-container)] text-[var(--md-sys-color-on-secondary-container)] hover:opacity-90 transition-opacity">
         <span class="ms text-base" id="acc-header-icon">account_circle</span>
-        <span id="acc-header-label">Hesaplar</span>
+        <span id="acc-header-label" class="text-[11px] sm:text-xs">Hesap</span>
       </button>
 
       <!-- Ayarlar İkonu -->
-      <button id="btn-settings-open" class="m3-icon-btn" title="Ayarlar & API">
-        <span class="ms">settings</span>
+      <button id="btn-settings-open" class="m3-icon-btn w-9 h-9 sm:w-10 sm:h-10" title="Ayarlar & API">
+        <span class="ms text-lg sm:text-xl">settings</span>
       </button>
     </div>
   </header>
@@ -493,15 +521,14 @@ body {
   <!-- ===================================================================
        BAĞLI HESAP DURUM ŞERİDİ (OTURUM BİLGİSİ)
        =================================================================== -->
-  <div id="accounts-strip" class="mb-4 p-3 rounded-2xl bg-[var(--md-sys-color-surface-container-low)] border border-[var(--md-sys-color-outline-variant)]/30 flex flex-wrap items-center justify-between gap-2.5 text-xs">
-    <div class="flex items-center gap-2">
-      <span class="ms text-sm text-[var(--md-sys-color-primary)]">sync</span>
-      <span class="font-medium text-[var(--md-sys-color-on-surface-variant)]">Aktarım Modu:</span>
-      <span id="strip-sp-badge" class="m3-chip"><span class="w-2 h-2 rounded-full bg-stone-500"></span>Spotify: Bağlı Değil</span>
-      <span id="strip-yt-badge" class="m3-chip"><span class="w-2 h-2 rounded-full bg-stone-500"></span>YouTube: Bağlı Değil</span>
+  <div id="accounts-strip" class="mb-4 p-2.5 sm:p-3 rounded-2xl bg-[var(--md-sys-color-surface-container-low)] border border-[var(--md-sys-color-outline-variant)]/30 flex items-center justify-between gap-2 text-xs">
+    <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap min-w-0">
+      <span class="ms text-sm text-[var(--md-sys-color-primary)] shrink-0">sync</span>
+      <span id="strip-sp-badge" class="m3-chip text-[11px] h-6 px-2"><span class="w-2 h-2 rounded-full bg-stone-500"></span>Spotify: Bağlı Değil</span>
+      <span id="strip-yt-badge" class="m3-chip text-[11px] h-6 px-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>YouTube: Sıfır Girişle Hazır</span>
     </div>
-    <button id="btn-quick-login" class="text-[var(--md-sys-color-primary)] hover:underline font-semibold flex items-center gap-1">
-      <span>Hesap Girişi Yap</span>
+    <button id="btn-quick-login" class="text-[var(--md-sys-color-primary)] hover:underline font-semibold flex items-center gap-0.5 shrink-0 text-xs">
+      <span>Yönet</span>
       <span class="ms text-sm">arrow_forward</span>
     </button>
   </div>
@@ -509,18 +536,22 @@ body {
   <!-- ===================================================================
        ANA DÖNÜŞTÜRÜCÜ KARTI
        =================================================================== -->
-  <section class="m3-card p-5 sm:p-6 mb-4 m3-enter" style="animation-delay:.05s">
+  <section class="m3-card p-4 sm:p-6 mb-4 m3-enter" style="animation-delay:.05s">
     <div id="seg" class="m3-segmented" role="tablist">
       <div class="m3-segmented-indicator"></div>
-      <button id="t-sy" role="tab" aria-selected="true">
-        <svg class="w-5 h-5" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg>
-        Spotify <span class="ms text-base">arrow_forward</span>
-        <svg class="w-5 h-5" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg> YouTube
+      <button id="t-sy" role="tab" aria-selected="true" class="text-xs sm:text-sm">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg>
+        <span class="truncate">Spotify</span>
+        <span class="ms text-sm sm:text-base shrink-0">arrow_forward</span>
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg>
+        <span class="truncate">YouTube</span>
       </button>
-      <button id="t-ys" role="tab" aria-selected="false">
-        <svg class="w-5 h-5" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg>
-        YouTube <span class="ms text-base">arrow_forward</span>
-        <svg class="w-5 h-5" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg> Spotify
+      <button id="t-ys" role="tab" aria-selected="false" class="text-xs sm:text-sm">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg>
+        <span class="truncate">YouTube</span>
+        <span class="ms text-sm sm:text-base shrink-0">arrow_forward</span>
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg>
+        <span class="truncate">Spotify</span>
       </button>
     </div>
 
@@ -626,11 +657,11 @@ body {
     </div>
 
     <!-- Hızlı Araç Çubuğu (Kopyala, İndir, TuneMyMusic) -->
-    <div class="flex flex-wrap items-center gap-2 px-1 mb-3">
-      <button id="btn-copy-menu" class="m3-btn m3-btn-tonal m3-btn-sm"><span class="ms text-sm">content_copy</span>Listeyi Kopyala</button>
-      <button id="btn-dl-menu" class="m3-btn m3-btn-tonal m3-btn-sm"><span class="ms text-sm">download</span>İndir (.m3u8 / .csv)</button>
-      <button id="btn-tunemy" class="m3-btn m3-btn-outlined m3-btn-sm"><span class="ms text-sm">sync_alt</span>TuneMyMusic</button>
-      <button id="openall" class="m3-btn m3-btn-outlined m3-btn-sm"><span class="ms text-sm">open_in_new</span>İlk 10’u Aç</button>
+    <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 px-1 mb-3">
+      <button id="btn-copy-menu" class="m3-btn m3-btn-tonal m3-btn-sm w-full sm:w-auto text-xs"><span class="ms text-sm">content_copy</span>Listeyi Kopyala</button>
+      <button id="btn-dl-menu" class="m3-btn m3-btn-tonal m3-btn-sm w-full sm:w-auto text-xs"><span class="ms text-sm">download</span>İndir (.m3u8/.csv)</button>
+      <button id="btn-tunemy" class="m3-btn m3-btn-outlined m3-btn-sm w-full sm:w-auto text-xs"><span class="ms text-sm">sync_alt</span>TuneMyMusic</button>
+      <button id="openall" class="m3-btn m3-btn-outlined m3-btn-sm w-full sm:w-auto text-xs"><span class="ms text-sm">open_in_new</span>İlk 10’u Aç</button>
     </div>
 
     <!-- Şarkı Arama / Filtreleme Çubuğu -->
@@ -649,61 +680,84 @@ body {
 </main>
 
 <!-- ===================================================================
-     MODAL 1: HESAP VE OTURUM YÖNETİMİ (SPOTIFY & GOOGLE/YOUTUBE OAUTH)
+     MODAL 1: HESAP VE OTURUM YÖNETİMİ (SPOTIFY PKCE & GOOGLE/YOUTUBE)
      =================================================================== -->
 <div id="modal-accounts" class="m3-scrim hidden" role="dialog" aria-modal="true">
   <div class="m3-dialog">
-    <div class="flex items-center justify-between pb-3 border-b border-[var(--md-sys-color-outline-variant)]/30 mb-4">
+    <div class="flex items-center justify-between pb-3 border-b border-[var(--md-sys-color-outline-variant)]/30 mb-3.5">
       <div class="flex items-center gap-2.5">
-        <span class="w-8 h-8 rounded-full grid place-items-center bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)]">
+        <span class="w-8 h-8 rounded-full grid place-items-center bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)] shrink-0">
           <span class="ms f text-lg">manage_accounts</span>
         </span>
-        <h3 class="font-bold text-base">Hesap Bağlantıları (Oturum Açma)</h3>
+        <h3 class="font-bold text-base text-[var(--md-sys-color-on-surface)]">Hesap Bağlantıları & Giriş</h3>
       </div>
       <button id="close-accounts" class="m3-icon-btn"><span class="ms">close</span></button>
     </div>
 
-    <p class="text-xs text-[var(--md-sys-color-on-surface-variant)] mb-4">
-      Hesaplarınızı bağlayarak mobil veya masaüstünde çalma listelerinizi <b>tek tıkla doğrudan kendi kütüphanenize</b> oluşturabilirsiniz.
-    </p>
-
-    <!-- Spotify Kartı -->
-    <div class="p-4 rounded-2xl bg-[var(--md-sys-color-surface-container)] border border-[var(--md-sys-color-outline-variant)]/40 mb-3.5">
+    <!-- SPOTIFY KARTI -->
+    <div class="p-3.5 sm:p-4 rounded-2xl bg-[var(--md-sys-color-surface-container)] border border-[var(--md-sys-color-outline-variant)]/40 mb-3.5">
       <div class="flex items-center justify-between mb-2">
         <div class="flex items-center gap-2">
-          <svg class="w-6 h-6" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg>
+          <svg class="w-6 h-6 shrink-0" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg>
           <div>
             <b class="block text-sm">Spotify Hesabı</b>
             <span id="modal-sp-status" class="text-xs text-[var(--md-sys-color-on-surface-variant)]">Bağlı değil</span>
           </div>
         </div>
-        <div id="modal-sp-avatar" class="w-8 h-8 rounded-full bg-[var(--md-sys-color-surface-container-high)] hidden overflow-hidden">
+        <div id="modal-sp-avatar" class="w-8 h-8 rounded-full bg-[var(--md-sys-color-surface-container-high)] hidden overflow-hidden shrink-0">
           <img src="" alt="" class="w-full h-full object-cover">
         </div>
       </div>
 
       <!-- Spotify Giriş Alanı -->
-      <div id="sp-login-controls" class="space-y-2 mt-3">
-        <div class="text-[11px] text-[var(--md-sys-color-on-surface-variant)]">
-          Kendi Spotify Client ID'niz varsa girin veya doğrudan token yapıştırın:
-        </div>
-        <div class="m3-text-field h-10 px-3 text-xs bg-[var(--md-sys-color-surface-container-highest)]">
-          <input id="sp-client-id-input" type="text" placeholder="Spotify Client ID (İsteğe bağlı)">
-        </div>
-        <div class="flex flex-wrap gap-2 pt-1">
-          <button id="btn-login-spotify-oauth" class="m3-btn m3-btn-spotify m3-btn-sm font-bold flex-1">
-            <span class="ms text-sm">login</span>Spotify ile Giriş Yap (OAuth)
+      <div id="sp-login-controls" class="space-y-3 mt-3">
+        <!-- 1. Yol: Otomatik PKCE OAuth -->
+        <div class="p-2.5 rounded-xl bg-[var(--md-sys-color-surface-container-high)] border border-white/5 space-y-2">
+          <div class="text-xs font-semibold text-[var(--md-sys-color-on-surface)] flex items-center gap-1">
+            <span class="ms text-sm text-[var(--brand-spotify)]">bolt</span>
+            <span>1. Yol: Spotify ile Oturum Aç (PKCE)</span>
+          </div>
+          <div class="m3-text-field h-9 px-3 text-xs bg-[var(--md-sys-color-surface-container-highest)]">
+            <input id="sp-client-id-input" type="text" placeholder="Spotify Client ID (Özel veya Varsayılan)">
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-[var(--md-sys-color-outline)] pt-0.5">
+            <span class="truncate">Redirect URI: <span id="sp-redirect-uri-display" class="font-mono text-stone-300"></span></span>
+            <button id="btn-copy-redirect-uri" class="text-[var(--md-sys-color-primary)] hover:underline shrink-0 ml-1 font-semibold">Kopyala</button>
+          </div>
+          <button id="btn-login-spotify-oauth" class="m3-btn m3-btn-spotify w-full h-10 text-xs sm:text-sm font-bold shadow-md">
+            <span class="ms text-base">login</span>Spotify ile Giriş Yap (Resmî PKCE)
           </button>
-          <button id="btn-prompt-sp-token" class="m3-btn m3-btn-outlined m3-btn-sm text-xs">
-            <span class="ms text-sm">key</span>Token Yapıştır
-          </button>
+        </div>
+
+        <!-- 2. Yol: Hızlı Token Girişi -->
+        <div class="p-2.5 rounded-xl bg-[var(--md-sys-color-surface-container-high)] border border-white/5 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-[var(--md-sys-color-on-surface)] flex items-center gap-1">
+              <span class="ms text-sm text-[var(--md-sys-color-primary)]">key</span>
+              <span>2. Yol: Hızlı Token ile Bağlan</span>
+            </span>
+            <a href="https://developer.spotify.com/documentation/web-api" target="_blank" rel="noopener" class="text-[11px] text-[var(--md-sys-color-primary)] hover:underline flex items-center gap-0.5">
+              <span>Token Al</span><span class="ms text-xs">open_in_new</span>
+            </a>
+          </div>
+          <p class="text-[11px] text-[var(--md-sys-color-on-surface-variant)] leading-tight">
+            Geliştirici yönlendirmesiyle uğraşmadan Spotify Console veya Web erişim tokeninizi yapıştırın:
+          </p>
+          <div class="flex gap-2">
+            <div class="m3-text-field h-9 px-3 text-xs flex-1 bg-[var(--md-sys-color-surface-container-highest)]">
+              <input id="sp-token-direct-input" type="password" placeholder="Spotify Access Token yapıştır...">
+            </div>
+            <button id="btn-save-sp-token-direct" class="m3-btn m3-btn-tonal m3-btn-sm text-xs font-semibold shrink-0">
+              Bağlan
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- Spotify Bağlıyken -->
       <div id="sp-logged-controls" class="hidden flex items-center justify-between pt-2">
         <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1">
-          <span class="ms text-sm">check_circle</span> Oturum Açık
+          <span class="ms text-sm">check_circle</span> Oturum Açık (Doğrudan Kütüphane Aktarımı Hazır)
         </span>
         <button id="btn-logout-spotify" class="m3-btn m3-btn-outlined m3-btn-sm text-xs text-rose-300 border-rose-800">
           Çıkış Yap
@@ -711,40 +765,60 @@ body {
       </div>
     </div>
 
-    <!-- YouTube / Google Kartı -->
-    <div class="p-4 rounded-2xl bg-[var(--md-sys-color-surface-container)] border border-[var(--md-sys-color-outline-variant)]/40 mb-3.5">
+    <!-- YOUTUBE / GOOGLE KARTI -->
+    <div class="p-3.5 sm:p-4 rounded-2xl bg-[var(--md-sys-color-surface-container)] border border-[var(--md-sys-color-outline-variant)]/40 mb-3.5">
       <div class="flex items-center justify-between mb-2">
         <div class="flex items-center gap-2">
-          <svg class="w-6 h-6" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg>
+          <svg class="w-6 h-6 shrink-0" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg>
           <div>
-            <b class="block text-sm">YouTube / Google Hesabı</b>
-            <span id="modal-yt-status" class="text-xs text-[var(--md-sys-color-on-surface-variant)]">Bağlı değil</span>
+            <b class="block text-sm">YouTube / Google</b>
+            <span id="modal-yt-status" class="text-xs text-emerald-400 font-medium">Sıfır Girişle Aktarım Hazır</span>
           </div>
         </div>
       </div>
 
-      <!-- YouTube Giriş Alanı -->
-      <div id="yt-login-controls" class="space-y-2 mt-3">
-        <div class="text-[11px] text-[var(--md-sys-color-on-surface-variant)]">
-          Google Client ID veya YouTube Erişim Tokeni girin:
+      <!-- YouTube Açıklama & Kontroller -->
+      <div id="yt-login-controls" class="space-y-3 mt-3">
+        <!-- Sıfır Giriş Açıklaması -->
+        <div class="p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-500/20 text-xs space-y-1">
+          <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+            <span class="ms text-base">check_circle</span>
+            Google Girişi Yapmanıza Gerek Yoktur!
+          </div>
+          <p class="text-[11px] text-emerald-200/80 leading-relaxed">
+            BridgeMusic, Spotify playlistinizi resmî YouTube video kuyruğuna dönüştürür. <b>"YouTube Oynatma Listesi Olarak Aç"</b> butonuna dokunduğunuzda liste YouTube mobil uygulamasında açılır; üstteki <b>"+" (Kaydet)</b> butonuna basarak tüm listeyi kütüphanenize doğrudan ekleyebilirsiniz.
+          </p>
         </div>
-        <div class="m3-text-field h-10 px-3 text-xs bg-[var(--md-sys-color-surface-container-highest)]">
-          <input id="yt-client-id-input" type="text" placeholder="Google Client ID veya OAuth Token">
-        </div>
-        <div class="flex flex-wrap gap-2 pt-1">
-          <button id="btn-login-google-oauth" class="m3-btn m3-btn-youtube m3-btn-sm font-bold flex-1">
-            <span class="ms text-sm">login</span>Google ile Giriş Yap
-          </button>
-          <button id="btn-prompt-yt-token" class="m3-btn m3-btn-outlined m3-btn-sm text-xs">
-            <span class="ms text-sm">key</span>Token Yapıştır
-          </button>
+
+        <!-- İsteğe Bağlı API Girişi -->
+        <div class="p-2.5 rounded-xl bg-[var(--md-sys-color-surface-container-high)] border border-white/5 space-y-2">
+          <div class="text-xs font-semibold text-[var(--md-sys-color-on-surface)] flex items-center gap-1">
+            <span class="ms text-sm text-[var(--brand-youtube)]">api</span>
+            <span>İsteğe Bağlı: Google API / Token ile Oturum</span>
+          </div>
+          <div class="flex gap-2">
+            <div class="m3-text-field h-9 px-3 text-xs flex-1 bg-[var(--md-sys-color-surface-container-highest)]">
+              <input id="yt-token-direct-input" type="password" placeholder="Google / YouTube OAuth Token yapıştır...">
+            </div>
+            <button id="btn-save-yt-token-direct" class="m3-btn m3-btn-tonal m3-btn-sm text-xs font-semibold shrink-0">
+              Bağlan
+            </button>
+          </div>
+          <div class="pt-1">
+            <div class="m3-text-field h-9 px-3 text-xs bg-[var(--md-sys-color-surface-container-highest)]">
+              <input id="yt-client-id-input" type="text" placeholder="Google Web Client ID (İsteğe bağlı)">
+            </div>
+            <button id="btn-login-google-oauth" class="m3-btn m3-btn-youtube w-full mt-2 h-9 text-xs font-bold shadow-md">
+              <span class="ms text-sm">login</span>Google ile Oturum Aç (OAuth 2.0)
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- YouTube Bağlıyken -->
       <div id="yt-logged-controls" class="hidden flex items-center justify-between pt-2">
         <span class="text-xs text-red-400 font-semibold flex items-center gap-1">
-          <span class="ms text-sm">check_circle</span> Oturum Açık
+          <span class="ms text-sm">check_circle</span> Oturum Açık (Doğrudan API Modu)
         </span>
         <button id="btn-logout-youtube" class="m3-btn m3-btn-outlined m3-btn-sm text-xs text-rose-300 border-rose-800">
           Çıkış Yap
@@ -752,7 +826,7 @@ body {
       </div>
     </div>
 
-    <div class="pt-2 text-right">
+    <div class="pt-1 text-right">
       <button id="btn-accounts-done" class="m3-btn m3-btn-tonal m3-btn-sm">Tamam</button>
     </div>
   </div>
@@ -1022,13 +1096,13 @@ async function checkYouTubeAuth(){
 function updateAccountUI(){
   // Üst şerit badge'leri
   if(spotifyUser){
-    $('strip-sp-badge').className='m3-chip m3-chip-success';
+    $('strip-sp-badge').className='m3-chip m3-chip-success text-[11px] h-6 px-2';
     $('strip-sp-badge').innerHTML=`<span class="w-2 h-2 rounded-full bg-[var(--brand-spotify)]"></span>Spotify: ${esc(spotifyUser.display_name||'Bağlı')}`;
     $('sp-login-controls').classList.add('hidden');
     $('sp-logged-controls').classList.remove('hidden');
     $('modal-sp-status').textContent=`Oturum Açık (${spotifyUser.display_name||'Kullanıcı'})`;
   }else{
-    $('strip-sp-badge').className='m3-chip';
+    $('strip-sp-badge').className='m3-chip text-[11px] h-6 px-2';
     $('strip-sp-badge').innerHTML='<span class="w-2 h-2 rounded-full bg-stone-500"></span>Spotify: Bağlı Değil';
     $('sp-login-controls').classList.remove('hidden');
     $('sp-logged-controls').classList.add('hidden');
@@ -1036,25 +1110,25 @@ function updateAccountUI(){
   }
 
   if(youtubeUser){
-    $('strip-yt-badge').className='m3-chip m3-chip-youtube';
+    $('strip-yt-badge').className='m3-chip m3-chip-youtube text-[11px] h-6 px-2';
     $('strip-yt-badge').innerHTML=`<span class="w-2 h-2 rounded-full bg-[var(--brand-youtube)]"></span>YouTube: ${esc(youtubeUser.name||'Bağlı')}`;
     $('yt-login-controls').classList.add('hidden');
     $('yt-logged-controls').classList.remove('hidden');
     $('modal-yt-status').textContent=`Oturum Açık (${youtubeUser.name||'Kanal'})`;
   }else{
-    $('strip-yt-badge').className='m3-chip';
-    $('strip-yt-badge').innerHTML='<span class="w-2 h-2 rounded-full bg-stone-500"></span>YouTube: Bağlı Değil';
+    $('strip-yt-badge').className='m3-chip text-[11px] h-6 px-2';
+    $('strip-yt-badge').innerHTML='<span class="w-2 h-2 rounded-full bg-emerald-500"></span>YouTube: Sıfır Girişle Hazır';
     $('yt-login-controls').classList.remove('hidden');
     $('yt-logged-controls').classList.add('hidden');
-    $('modal-yt-status').textContent='Bağlı değil';
+    $('modal-yt-status').textContent='Sıfır Girişle Aktarım Hazır';
   }
 
   if(spotifyUser||youtubeUser){
     $('acc-header-icon').classList.add('text-emerald-400');
-    $('acc-header-label').textContent=spotifyUser?spotifyUser.display_name:(youtubeUser?youtubeUser.name:'Hesap');
+    $('acc-header-label').textContent=spotifyUser?spotifyUser.display_name.split(' ')[0]:(youtubeUser?youtubeUser.name.split(' ')[0]:'Hesap');
   }else{
     $('acc-header-icon').classList.remove('text-emerald-400');
-    $('acc-header-label').textContent='Hesaplar';
+    $('acc-header-label').textContent='Hesap';
   }
 
   if(tracks.length){
@@ -1062,91 +1136,213 @@ function updateAccountUI(){
   }
 }
 
-/* OAuth URL Yönlendirmesini Yakalama (Hash Parametreleri) */
-function handleAuthRedirect(){
-  if(window.location.hash){
-    const params=new URLSearchParams(window.location.hash.substring(1));
-    const token=params.get('access_token');
-    const state=params.get('state');
+/* ===================================================================
+   SPOTIFY PKCE VE OAUTH ŞİFRELEME YARDIMCILARI
+   =================================================================== */
+function generateRandomString(length = 64) {
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+  const values = crypto.getRandomValues(new Uint8Array(length));
+  return Array.from(values).map(x => possible[x % possible.length]).join('');
+}
 
-    if(token){
-      if(state&&state.startsWith('google_')){
-        localStorage.setItem('bm_yt_token',token);
-        toast('Google / YouTube hesabı başarıyla bağlandı!','succ');
-        checkYouTubeAuth();
-      }else{
-        localStorage.setItem('bm_sp_token',token);
-        const exp=parseInt(params.get('expires_in')||'3600',10)*1000;
-        localStorage.setItem('bm_sp_exp',Date.now()+exp);
-        toast('Spotify hesabı başarıyla bağlandı!','succ');
-        checkSpotifyAuth();
+async function sha256(plain) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(plain);
+  return window.crypto.subtle.digest('SHA-256', data);
+}
+
+function base64url(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary)
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
+
+async function generateCodeChallenge(verifier) {
+  const hashed = await sha256(verifier);
+  return base64url(hashed);
+}
+
+/* OAuth URL Yönlendirmesini Yakalama (PKCE Code ve Token Parametreleri) */
+async function handleAuthRedirect(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const hashParams = new URLSearchParams(window.location.hash ? window.location.hash.substring(1) : '');
+
+  // 1. Spotify PKCE Hatası Yakalama
+  if (urlParams.has('error')) {
+    const err = urlParams.get('error');
+    const desc = urlParams.get('error_description') || err;
+    toast('Spotify yetki reddedildi: ' + desc, 1);
+    window.history.replaceState(null, '', window.location.pathname);
+    return;
+  }
+
+  // 2. Spotify PKCE Auth Code Değişimi
+  if (urlParams.has('code')) {
+    const code = urlParams.get('code');
+    const verifier = localStorage.getItem('bm_sp_verifier');
+    const clientId = localStorage.getItem('bm_sp_client_id') || '901cb001f2f84b568ce48b0a501bf000';
+    const redirectUri = window.location.origin + window.location.pathname;
+
+    try {
+      toast('Spotify yetkilendirmesi tamamlanıyor...', 'norm');
+      const response = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          grant_type: 'authorization_code',
+          code: code,
+          redirect_uri: redirectUri,
+          client_id: clientId,
+          code_verifier: verifier
+        })
+      });
+
+      const data = await response.json();
+      if (data.access_token) {
+        localStorage.setItem('bm_sp_token', data.access_token);
+        if (data.refresh_token) localStorage.setItem('bm_sp_refresh', data.refresh_token);
+        const exp = (data.expires_in || 3600) * 1000;
+        localStorage.setItem('bm_sp_exp', Date.now() + exp);
+        toast('Spotify hesabı başarıyla bağlandı!', 'succ');
+        await checkSpotifyAuth();
+      } else {
+        toast(`Spotify giriş hatası: ${data.error_description || data.error}`, 1);
       }
-      window.history.replaceState(null,'',window.location.pathname+window.location.search);
+    } catch (e) {
+      toast('Spotify bağlantı hatası: ' + e.message, 1);
+    } finally {
+      window.history.replaceState(null, '', window.location.pathname);
     }
+    return;
+  }
+
+  // 3. Hash Parametreleri (Google Token veya doğrudan token yönlendirmesi)
+  const token = hashParams.get('access_token');
+  const state = hashParams.get('state');
+  if (token) {
+    if (state && state.startsWith('google_')) {
+      localStorage.setItem('bm_yt_token', token);
+      toast('Google / YouTube hesabı başarıyla bağlandı!', 'succ');
+      checkYouTubeAuth();
+    } else {
+      localStorage.setItem('bm_sp_token', token);
+      const exp = parseInt(hashParams.get('expires_in') || '3600', 10) * 1000;
+      localStorage.setItem('bm_sp_exp', Date.now() + exp);
+      toast('Spotify hesabı başarıyla bağlandı!', 'succ');
+      checkSpotifyAuth();
+    }
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
   }
 }
 
-/* Spotify ile Giriş (Implicit Grant PKCE) */
-$('btn-login-spotify-oauth').onclick=()=>{
-  const clientId=$('sp-client-id-input').value.trim()||localStorage.getItem('bm_sp_client_id')||'901cb001f2f84b568ce48b0a501bf000';
-  localStorage.setItem('bm_sp_client_id',clientId);
-  const redirectUri=window.location.origin+window.location.pathname;
-  const scopes=['playlist-modify-public','playlist-modify-private','user-read-private'].join(' ');
-  const authUrl=`https://accounts.spotify.com/authorize?client_id=${encodeURIComponent(clientId)}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&show_dialog=true`;
-  window.location.href=authUrl;
-};
-$('btn-prompt-sp-token').onclick=()=>{
-  const t=prompt('Spotify Access Token (Bearer olmadan yapıştırın):');
-  if(t&&t.trim()){
-    localStorage.setItem('bm_sp_token',t.trim());
-    localStorage.setItem('bm_sp_exp',Date.now()+3600*1000);
-    toast('Spotify tokeni kaydedildi.','succ');
-    checkSpotifyAuth();
+/* Spotify ile Giriş (Authorization Code + PKCE) */
+$('btn-login-spotify-oauth').onclick = async () => {
+  try {
+    const clientId = $('sp-client-id-input').value.trim() || localStorage.getItem('bm_sp_client_id') || '901cb001f2f84b568ce48b0a501bf000';
+    localStorage.setItem('bm_sp_client_id', clientId);
+
+    const verifier = generateRandomString(64);
+    localStorage.setItem('bm_sp_verifier', verifier);
+
+    const challenge = await generateCodeChallenge(verifier);
+    const redirectUri = window.location.origin + window.location.pathname;
+    const scopes = [
+      'playlist-modify-public',
+      'playlist-modify-private',
+      'user-read-private',
+      'playlist-read-private'
+    ].join(' ');
+
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&code_challenge_method=S256&code_challenge=${encodeURIComponent(challenge)}&show_dialog=true`;
+
+    window.location.href = authUrl;
+  } catch (e) {
+    toast('Spotify OAuth başlatılamadı: ' + e.message, 1);
   }
 };
-$('btn-logout-spotify').onclick=()=>{
+
+/* Spotify Hızlı Token Kaydetme */
+$('btn-save-sp-token-direct').onclick = () => {
+  const t = $('sp-token-direct-input').value.trim();
+  if (!t) return toast('Lütfen geçerli bir Spotify tokeni girin.', 1);
+  localStorage.setItem('bm_sp_token', t.replace(/^Bearer\s+/i, ''));
+  localStorage.setItem('bm_sp_exp', Date.now() + 3600 * 1000);
+  $('sp-token-direct-input').value = '';
+  toast('Spotify tokeni kaydedildi.', 'succ');
+  checkSpotifyAuth();
+};
+
+$('btn-logout-spotify').onclick = () => {
   localStorage.removeItem('bm_sp_token');
   localStorage.removeItem('bm_sp_exp');
-  spotifyUser=null;
+  localStorage.removeItem('bm_sp_refresh');
+  spotifyUser = null;
   updateAccountUI();
   toast('Spotify oturumu kapatıldı.');
 };
 
 /* Google / YouTube Giriş */
-$('btn-login-google-oauth').onclick=()=>{
-  const clientId=$('yt-client-id-input').value.trim()||localStorage.getItem('bm_yt_client_id')||'';
-  if(!clientId){
-    const inputId=prompt('Google Cloud Console\'dan aldığınız Web Client ID\'nizi girin:');
-    if(!inputId)return;
-    localStorage.setItem('bm_yt_client_id',inputId.trim());
+$('btn-login-google-oauth').onclick = () => {
+  const clientId = $('yt-client-id-input').value.trim() || localStorage.getItem('bm_yt_client_id') || '';
+  if (!clientId) {
+    $('yt-client-id-input').focus();
+    return toast('Google ile doğrudan oturum için lütfen Client ID girin veya yukarıdaki Token alanını kullanın.', 1);
   }
-  const cid=localStorage.getItem('bm_yt_client_id');
-  const redirectUri=window.location.origin+window.location.pathname;
-  const scope='https://www.googleapis.com/auth/youtube';
-  const state='google_'+Math.random().toString(36).substring(2,9);
-  const authUrl=`https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(cid)}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}&state=${encodeURIComponent(state)}&prompt=consent`;
-  window.location.href=authUrl;
+  localStorage.setItem('bm_yt_client_id', clientId);
+  const redirectUri = window.location.origin + window.location.pathname;
+  const scope = 'https://www.googleapis.com/auth/youtube';
+  const state = 'google_' + Math.random().toString(36).substring(2, 9);
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(clientId)}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}&state=${encodeURIComponent(state)}&prompt=consent`;
+  window.location.href = authUrl;
 };
-$('btn-prompt-yt-token').onclick=()=>{
-  const t=prompt('YouTube OAuth Access Token:');
-  if(t&&t.trim()){
-    localStorage.setItem('bm_yt_token',t.trim());
-    toast('YouTube tokeni kaydedildi.','succ');
-    checkYouTubeAuth();
-  }
+
+/* YouTube Hızlı Token Kaydetme */
+$('btn-save-yt-token-direct').onclick = () => {
+  const t = $('yt-token-direct-input').value.trim();
+  if (!t) return toast('Lütfen geçerli bir YouTube tokeni girin.', 1);
+  localStorage.setItem('bm_yt_token', t.replace(/^Bearer\s+/i, ''));
+  $('yt-token-direct-input').value = '';
+  toast('YouTube tokeni kaydedildi.', 'succ');
+  checkYouTubeAuth();
 };
-$('btn-logout-youtube').onclick=()=>{
+
+$('btn-logout-youtube').onclick = () => {
   localStorage.removeItem('bm_yt_token');
-  youtubeUser=null;
+  youtubeUser = null;
   updateAccountUI();
   toast('YouTube oturumu kapatıldı.');
 };
 
+/* Redirect URI Kopyalama Butonu */
+$('btn-copy-redirect-uri').onclick = async () => {
+  const rUri = window.location.origin + window.location.pathname;
+  await copyText(rUri);
+  toast('Redirect URI kopyalandı!', 'succ');
+};
+
 /* Modal Açma / Kapama */
-$('btn-accounts-open').onclick=()=>$('modal-accounts').classList.remove('hidden');
-$('btn-quick-login').onclick=()=>$('modal-accounts').classList.remove('hidden');
-$('close-accounts').onclick=()=>$('modal-accounts').classList.add('hidden');
-$('btn-accounts-done').onclick=()=>$('modal-accounts').classList.add('hidden');
+function openAccountsModal() {
+  const rUri = window.location.origin + window.location.pathname;
+  if ($('sp-redirect-uri-display')) $('sp-redirect-uri-display').textContent = rUri;
+  if ($('sp-client-id-input') && !$('sp-client-id-input').value) {
+    $('sp-client-id-input').value = localStorage.getItem('bm_sp_client_id') || '';
+  }
+  if ($('yt-client-id-input') && !$('yt-client-id-input').value) {
+    $('yt-client-id-input').value = localStorage.getItem('bm_yt_client_id') || '';
+  }
+  $('modal-accounts').classList.remove('hidden');
+}
+
+$('btn-accounts-open').onclick = openAccountsModal;
+$('btn-quick-login').onclick = openAccountsModal;
+$('close-accounts').onclick = () => $('modal-accounts').classList.add('hidden');
+$('btn-accounts-done').onclick = () => $('modal-accounts').classList.add('hidden');
 
 /* ---------- AYARLAR MODALI ---------- */
 function loadSettings(){
@@ -1436,14 +1632,14 @@ function getYouTubePlaylistChunks(){
 async function createPlaylistOnSpotify(){
   const token=getStoredSpotifyToken();
   if(!token){
-    $('modal-accounts').classList.remove('hidden');
+    openAccountsModal();
     toast('Önce Spotify hesabınıza giriş yapın.',1);
     return;
   }
   if(!spotifyUser){
     await checkSpotifyAuth();
     if(!spotifyUser){
-      $('modal-accounts').classList.remove('hidden');
+      openAccountsModal();
       return toast('Spotify oturumu yenilenemedi, tekrar giriş yapın.',1);
     }
   }
@@ -1454,7 +1650,7 @@ async function createPlaylistOnSpotify(){
   try{
     // 1. Çalma Listesi Oluştur
     const plTitle=$('ptitle').textContent||'BridgeMusic Playlist';
-    const createRes=await fetch(`https://api.spotify.com/v1/users/${spotifyUser.id}/playlists`,{
+    let createRes=await fetch('https://api.spotify.com/v1/me/playlists',{
       method:'POST',
       headers:{
         'Authorization':`Bearer ${token}`,
@@ -1466,6 +1662,20 @@ async function createPlaylistOnSpotify(){
         public:true
       })
     });
+    if(!createRes.ok && spotifyUser?.id){
+      createRes=await fetch(`https://api.spotify.com/v1/users/${spotifyUser.id}/playlists`,{
+        method:'POST',
+        headers:{
+          'Authorization':`Bearer ${token}`,
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          name:plTitle,
+          description:'BridgeMusic ile aktarıldı',
+          public:true
+        })
+      });
+    }
     if(!createRes.ok)throw new Error('Spotify çalma listesi oluşturulamadı (Kod: '+createRes.status+')');
     const plData=await createRes.json();
     const playlistId=plData.id;
@@ -1497,16 +1707,20 @@ async function createPlaylistOnSpotify(){
     }
 
     // 3. Şarkıları 100'lük gruplar halinde ekle
-    for(let i=0;i<uris.length;i+=100){
-      const chunk=uris.slice(i,i+100);
-      await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`,{
-        method:'POST',
-        headers:{
-          'Authorization':`Bearer ${token}`,
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify({uris:chunk})
-      });
+    if(uris.length>0){
+      for(let i=0;i<uris.length;i+=100){
+        const chunk=uris.slice(i,i+100);
+        await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`,{
+          method:'POST',
+          headers:{
+            'Authorization':`Bearer ${token}`,
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({uris:chunk})
+        });
+      }
+    }else{
+      toast('Eşleşen Spotify parçası bulunamadı, boş bir liste oluşturuldu.',1);
     }
 
     // Başarı Durumu
@@ -1522,7 +1736,7 @@ async function createPlaylistOnSpotify(){
 async function createPlaylistOnYouTube(){
   const token=getStoredYouTubeToken();
   if(!token){
-    $('modal-accounts').classList.remove('hidden');
+    openAccountsModal();
     toast('Önce Google / YouTube hesabınıza giriş yapın.',1);
     return;
   }
@@ -1555,7 +1769,7 @@ async function createPlaylistOnYouTube(){
       if(!vId)vId=await searchYouTubeVideo(t);
       if(vId){
         try{
-          await fetch('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet',{
+          const addRes=await fetch('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet',{
             method:'POST',
             headers:{
               'Authorization':`Bearer ${token}`,
@@ -1565,7 +1779,7 @@ async function createPlaylistOnYouTube(){
               snippet:{playlistId:playlistId,resourceId:{kind:'youtube#video',videoId:vId}}
             })
           });
-          addedCount++;
+          if(addRes.ok)addedCount++;
         }catch(e){}
       }
       if(btn){
@@ -1682,7 +1896,7 @@ function renderHubButtons(){
           <span>Spotify ile Giriş Yapıp Doğrudan Hesaba Aktar</span>
         </button>
       `;
-      setTimeout(()=>{if($('btn-login-sp-hub'))$('btn-login-sp-hub').onclick=()=>$('modal-accounts').classList.remove('hidden');},10);
+      setTimeout(()=>{if($('btn-login-sp-hub'))$('btn-login-sp-hub').onclick=openAccountsModal;},10);
     }
 
     // Pano ile Toplu Aktar (Masaüstü Ctrl+V)
@@ -1780,14 +1994,14 @@ function renderList(list){
         <div class="min-w-0">
           <div class="truncate font-semibold text-sm sm:text-base text-[var(--md-sys-color-on-surface)]">${esc(t.title)}</div>
           <div class="truncate text-xs flex items-center gap-2 text-[var(--md-sys-color-on-surface-variant)]">
-            <span>${esc(t.artist||'Bilinmeyen sanatçı')}</span>
-            ${hasYt?'<span class="m3-chip m3-chip-success" style="height:18px;font-size:10px;padding:0 5px">YT Eşleşti</span>':''}
+            <span class="truncate">${esc(t.artist||'Bilinmeyen sanatçı')}</span>
+            ${hasYt?'<span class="m3-chip m3-chip-success shrink-0" style="height:18px;font-size:10px;padding:0 5px">YT Eşleşti</span>':''}
           </div>
         </div>
         <div class="track-acts">
           <button class="m3-icon-btn btn-play" data-idx="${origIdx}" title="30sn Önizleme Dinle"><span class="ms text-lg">play_arrow</span></button>
-          <a id="sp-btn-${origIdx}" class="m3-btn m3-btn-tonal m3-btn-sm" target="_blank" rel="noopener" href="${spLink(t)}">${spLogo}Spotify</a>
-          <a id="yt-btn-${origIdx}" class="m3-btn m3-btn-tonal m3-btn-sm" target="_blank" rel="noopener" href="${ytLink(t)}">${ytLogo}YouTube</a>
+          <a id="sp-btn-${origIdx}" class="m3-btn m3-btn-tonal m3-btn-sm text-xs" target="_blank" rel="noopener" href="${spLink(t)}">${spLogo}Spotify</a>
+          <a id="yt-btn-${origIdx}" class="m3-btn m3-btn-tonal m3-btn-sm text-xs" target="_blank" rel="noopener" href="${ytLink(t)}">${ytLogo}YouTube</a>
           <button class="m3-icon-btn btn-copy-row" data-idx="${origIdx}" title="Satırı kopyala"><span class="ms text-base">content_copy</span></button>
         </div>
       </div>
@@ -1989,8 +2203,8 @@ $('go').onclick=async()=>{
 $('url').addEventListener('keydown',e=>{if(e.key==='Enter')$('go').click()});
 
 /* Sayfa İlk Yüklendiğinde Oturum ve Parametre Kontrolleri */
-window.addEventListener('DOMContentLoaded',()=>{
-  handleAuthRedirect();
+window.addEventListener('DOMContentLoaded', async () => {
+  await handleAuthRedirect();
   checkSpotifyAuth();
   checkYouTubeAuth();
 });
