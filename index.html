@@ -3,341 +3,888 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BridgeMusic — Oynatma Listesi Taşıyıcı</title>
+<title>BridgeMusic — Profesyonel Oynatma Listesi Köprüsü</title>
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 <style>
-:root{
-  --bg:#13111a;--s-low:#1b1823;--s:#201d29;--s-high:#2b2735;--s-hi2:#363240;
-  --on:#e8e1ee;--mut:#b0a8bb;--ln:#4a4555;
-  --pr:#d8b9ff;--on-pr:#3d1a69;--pr-c:#553182;--on-pr-c:#efdcff;
-  --te:#ffb1c4;--on-te:#5c1330;--sec-c:#4b4358;
-  --sp:#3ddc84;--on-sp:#052b14;--yt:#ff5252;--on-yt:#ffffff;--cut:#13111a;
+/* ===================================================================
+   GOOGLE MATERIAL DESIGN 3 (M3) — TONAL DESIGN SYSTEM (DARK THEME)
+   =================================================================== */
+:root {
+  --md-sys-color-primary: #d0bcff;
+  --md-sys-color-on-primary: #381e72;
+  --md-sys-color-primary-container: #4f378b;
+  --md-sys-color-on-primary-container: #eaddff;
+  --md-sys-color-secondary: #ccc2dc;
+  --md-sys-color-on-secondary: #332d41;
+  --md-sys-color-secondary-container: #4a4458;
+  --md-sys-color-on-secondary-container: #e8def8;
+  --md-sys-color-tertiary: #efb8c8;
+  --md-sys-color-on-tertiary: #492532;
+  --md-sys-color-tertiary-container: #633b48;
+  --md-sys-color-on-tertiary-container: #ffd8e4;
+  --md-sys-color-error: #f2b8b5;
+  --md-sys-color-on-error: #601410;
+  --md-sys-color-error-container: #8c1d18;
+  --md-sys-color-on-error-container: #f9dedc;
+  --md-sys-color-background: #141218;
+  --md-sys-color-on-background: #e6e0e9;
+  --md-sys-color-surface: #141218;
+  --md-sys-color-on-surface: #e6e0e9;
+  --md-sys-color-surface-variant: #49454f;
+  --md-sys-color-on-surface-variant: #cac4d0;
+  --md-sys-color-outline: #938f99;
+  --md-sys-color-outline-variant: #49454f;
+  --md-sys-color-surface-container-lowest: #0f0d13;
+  --md-sys-color-surface-container-low: #1d1b20;
+  --md-sys-color-surface-container: #211f26;
+  --md-sys-color-surface-container-high: #2b2930;
+  --md-sys-color-surface-container-highest: #36343b;
+
+  /* Marka Renkleri */
+  --brand-spotify: #1ed760;
+  --brand-spotify-on: #04210e;
+  --brand-youtube: #ff3333;
+  --brand-youtube-on: #ffffff;
+  --cut: #141218;
 }
-*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
-html,body{background:var(--bg)}
-body{color:var(--on);font-family:Figtree,"Segoe UI",system-ui,sans-serif;
-  background-image:radial-gradient(900px 420px at 15% -10%,#3a2563aa,transparent 70%),radial-gradient(700px 380px at 100% 0,#5c133055,transparent 70%);
-  background-repeat:no-repeat;min-height:100vh}
-.ms{font-family:"Material Symbols Rounded";font-weight:400;font-style:normal;font-size:22px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;font-variation-settings:"FILL" 0,"wght" 450,"GRAD" 0,"opsz" 24;user-select:none;flex:none}
-.ms.f{font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 24}
-.logo{width:20px;height:20px;flex:none}
-.card{background:var(--s);border-radius:28px}
-.card-lo{background:var(--s-low);border-radius:24px;border:1px solid #ffffff10}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;height:40px;padding:0 1.1rem;border-radius:999px;font-weight:600;font-size:.9rem;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s,background .2s,opacity .2s;cursor:pointer;border:0;color:inherit;text-decoration:none}
-.btn:hover{box-shadow:0 2px 10px #0008}.btn:active{transform:scale(.97)}
-.btn::after{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .2s}
-.btn:hover::after{opacity:.08}.btn:active::after{opacity:.14}
-.btn:focus-visible,.seg button:focus-visible,input:focus-visible,.ib:focus-visible{outline:2px solid var(--pr);outline-offset:2px}
-.b-fill{background:var(--pr);color:var(--on-pr)}
-.b-tonal{background:var(--sec-c);color:var(--on-pr-c)}
-.b-out{border:1px solid var(--ln);color:var(--pr)}
-.b-out:hover{background:#ffffff0a}
-.b-sp{background:var(--sp);color:var(--on-sp)}
-.b-yt{background:var(--yt);color:var(--on-yt)}
-.b-sm{height:34px;padding:0 .8rem;font-size:.8rem}
-.btn:disabled{opacity:.5;pointer-events:none}
-.ib{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--mut);cursor:pointer;background:none;border:0;transition:background .2s,color .2s}
-.ib:hover{background:#ffffff14;color:var(--on)}
-.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;background:var(--s-low);border-radius:999px;padding:4px}
-.seg i{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:var(--pr-c);border-radius:999px;transition:transform .35s cubic-bezier(.3,.9,.3,1)}
-.seg.ys i{transform:translateX(100%)}
-.seg button{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:.4rem;height:48px;border-radius:999px;color:var(--mut);font-weight:600;font-size:.88rem;border:0;background:none;cursor:pointer;transition:color .25s}
-.seg button[aria-selected=true]{color:var(--on-pr-c)}
-.field{display:flex;align-items:center;gap:.25rem;background:var(--s-high);border-radius:999px;padding:0 .4rem 0 1rem;height:56px;border:1px solid transparent;transition:border-color .2s,background .2s}
-.field:focus-within{border-color:var(--pr);background:var(--s-hi2)}
-.field input{flex:1;min-width:0;background:none;border:0;outline:0!important;color:var(--on);font:inherit;padding:0 .5rem}
-.field input::placeholder{color:#8d8698}
-.eq{display:flex;align-items:center;justify-content:center;gap:5px;height:64px}
-.eq b{width:7px;height:100%;border-radius:6px;background:linear-gradient(var(--pr),var(--te));transform:scaleY(.18);animation:eq 1.1s ease-in-out infinite;animation-delay:calc(var(--i)*-.13s);animation-duration:calc(.85s + var(--i)*.07s)}
-@keyframes eq{0%,100%{transform:scaleY(.18)}30%{transform:scaleY(1)}55%{transform:scaleY(.45)}75%{transform:scaleY(.8)}}
-.pulse{animation:pl 1.6s ease-in-out infinite}
-@keyframes pl{50%{opacity:.45}}
-.enter{animation:in .45s cubic-bezier(.2,.8,.2,1) both}
-@keyframes in{from{opacity:0;transform:translateY(14px) scale(.985)}}
-.row{display:grid;grid-template-columns:44px 1fr;gap:.4rem .8rem;align-items:center;padding:.75rem .6rem;border-radius:18px;transition:background .2s;animation:in .35s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d)*25ms)}
-.row:hover{background:#ffffff08}
-.row.playing{background:#ffffff12;outline:1px solid var(--pr)}
-.av{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--pr-c);color:var(--on-pr-c);position:relative;overflow:hidden;flex:none}
-.av img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.row:nth-child(3n+2) .av{background:#5c1330;color:#ffd9e2}
-.row:nth-child(3n) .av{background:var(--sec-c);color:#ebdff9}
-.acts{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;padding-left:calc(44px + .8rem)}
-@media(min-width:640px){.row{grid-template-columns:44px 1fr auto}.acts{grid-column:auto;padding:0;flex-wrap:nowrap}}
-.chip{display:inline-flex;align-items:center;gap:.3rem;height:28px;padding:0 .7rem;border-radius:8px;background:var(--s-high);font-size:.78rem;color:var(--mut)}
-.chip-ok{background:#1a4d2e;color:#85f8ab}
-.chip-warn{background:#4d3b1a;color:#ffd782}
-#toasts{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;flex-direction:column;gap:.5rem;z-index:90;width:min(92vw,440px)}
-.toast{display:flex;align-items:center;gap:.7rem;background:#e8e1ee;color:#1d1a24;border-radius:16px;padding:.85rem 1rem;font-size:.9rem;font-weight:500;box-shadow:0 8px 24px #000a;animation:in .3s both}
-.toast.err{background:#ffdad6;color:#410002}
-.toast.succ{background:#c4eed0;color:#053818}
-.toast.out{opacity:0;transform:translateY(8px);transition:.3s}
-.hidden{display:none!important}
-.modal-backdrop{position:fixed;inset:0;background:#000000aa;backdrop-filter:blur(6px);z-index:80;display:grid;place-items:center;padding:1rem;animation:in .2s ease}
-.modal-card{background:var(--s);border:1px solid #ffffff15;border-radius:24px;width:min(100%,520px);max-height:90vh;overflow-y:auto;padding:1.5rem;box-shadow:0 16px 48px #000c}
-.mini-eq{display:inline-flex;align-items:flex-end;gap:2px;height:14px;width:14px}
-.mini-eq span{width:3px;background:currentColor;border-radius:2px;animation:meq .8s ease-in-out infinite alternate}
-.mini-eq span:nth-child(1){height:40%;animation-delay:-.2s}
-.mini-eq span:nth-child(2){height:90%;animation-delay:-.4s}
-.mini-eq span:nth-child(3){height:60%;animation-delay:-.1s}
-@keyframes meq{from{height:25%}to{height:100%}}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}.eq b{animation-duration:2.4s!important}}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+  font-family: Figtree, Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+
+/* Material 3 Atmosferik Aydınlatma */
+body {
+  background-image:
+    radial-gradient(1000px 480px at 20% -10%, rgba(79, 55, 139, 0.35), transparent 70%),
+    radial-gradient(800px 420px at 95% -5%, rgba(99, 59, 72, 0.25), transparent 70%);
+  background-repeat: no-repeat;
+}
+
+/* Material Symbols Rounded font ayarları */
+.ms {
+  font-family: "Material Symbols Rounded";
+  font-weight: 400;
+  font-style: normal;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: "FILL" 0, "wght" 450, "GRAD" 0, "opsz" 24;
+  user-select: none;
+  flex: none;
+}
+.ms.f { font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24; }
+
+/* Material 3 Buton Tasarım Standartları */
+.m3-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 40px;
+  padding: 0 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.m3-btn:active { transform: scale(0.97); }
+.m3-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.m3-btn:hover::after { opacity: 0.08; }
+.m3-btn:active::after { opacity: 0.14; }
+
+/* Buton Varyantları */
+.m3-btn-filled {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.m3-btn-filled:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+
+.m3-btn-tonal {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+.m3-btn-outlined {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+.m3-btn-outlined:hover {
+  background-color: rgba(208, 188, 255, 0.08);
+  border-color: var(--md-sys-color-outline);
+}
+
+.m3-btn-spotify {
+  background-color: var(--brand-spotify);
+  color: var(--brand-spotify-on);
+  box-shadow: 0 2px 10px rgba(30, 215, 96, 0.25);
+}
+.m3-btn-spotify:hover { box-shadow: 0 4px 16px rgba(30, 215, 96, 0.4); }
+
+.m3-btn-youtube {
+  background-color: var(--brand-youtube);
+  color: var(--brand-youtube-on);
+  box-shadow: 0 2px 10px rgba(255, 51, 51, 0.25);
+}
+.m3-btn-youtube:hover { box-shadow: 0 4px 16px rgba(255, 51, 51, 0.4); }
+
+.m3-btn-sm { height: 32px; padding: 0 0.85rem; font-size: 0.8rem; }
+.m3-btn:disabled { opacity: 0.45; pointer-events: none; }
+
+/* Standart M3 İkon Butonu */
+.m3-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+  color: var(--md-sys-color-on-surface-variant);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.m3-icon-btn:hover {
+  background-color: rgba(230, 224, 233, 0.08);
+  color: var(--md-sys-color-on-surface);
+}
+
+/* Material 3 Cards (Surface Containers) */
+.m3-card {
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.m3-card-low {
+  background-color: var(--md-sys-color-surface-container-low);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.m3-card-high {
+  background-color: var(--md-sys-color-surface-container-high);
+  border-radius: 28px;
+}
+
+/* Material 3 Segmented Buttons */
+.m3-segmented {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  border-radius: 9999px;
+  padding: 4px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+.m3-segmented-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  background-color: var(--md-sys-color-secondary-container);
+  border-radius: 9999px;
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+.m3-segmented.is-yt-to-sp .m3-segmented-indicator { transform: translateX(100%); }
+.m3-segmented button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 48px;
+  border-radius: 9999px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 600;
+  font-size: 0.88rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+.m3-segmented button[aria-selected="true"] { color: var(--md-sys-color-on-secondary-container); }
+
+/* Material 3 Metin Giriş Alanı */
+.m3-text-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--md-sys-color-surface-container-highest);
+  border-radius: 9999px;
+  padding: 0 0.5rem 0 1.2rem;
+  height: 56px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.m3-text-field:focus-within {
+  border-color: var(--md-sys-color-primary);
+  background-color: var(--md-sys-color-surface-container-high);
+}
+.m3-text-field input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: 0 !important;
+  color: var(--md-sys-color-on-surface);
+  font-size: 0.95rem;
+}
+.m3-text-field input::placeholder { color: var(--md-sys-color-outline); }
+
+/* Ekolayzır Animasyonu */
+.m3-eq {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 56px;
+}
+.m3-eq b {
+  width: 6px;
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+  transform: scaleY(0.18);
+  animation: eq-anim 1.1s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.13s);
+}
+@keyframes eq-anim {
+  0%, 100% { transform: scaleY(0.18); }
+  30% { transform: scaleY(1); }
+  55% { transform: scaleY(0.45); }
+  75% { transform: scaleY(0.8); }
+}
+
+.m3-pulse { animation: m3-pulse-anim 1.6s ease-in-out infinite; }
+@keyframes m3-pulse-anim { 50% { opacity: 0.45; } }
+
+.m3-enter { animation: m3-enter-anim 0.4s cubic-bezier(0.2, 0, 0, 1) both; }
+@keyframes m3-enter-anim { from { opacity: 0; transform: translateY(16px) scale(0.99); } }
+
+/* Şarkı Satırı */
+.track-row {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+  padding: 0.75rem 0.6rem;
+  border-radius: 18px;
+  transition: background-color 0.2s;
+  animation: m3-enter-anim 0.35s cubic-bezier(0.2, 0, 0, 1) both;
+  animation-delay: calc(var(--d) * 25ms);
+}
+.track-row:hover { background-color: rgba(255, 255, 255, 0.04); }
+.track-row.is-active-preview {
+  background-color: rgba(208, 188, 255, 0.08);
+  outline: 1px solid var(--md-sys-color-primary);
+}
+.track-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  position: relative;
+  overflow: hidden;
+  flex: none;
+}
+.track-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+.track-acts {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding-left: calc(44px + 0.8rem);
+}
+@media (min-width: 640px) {
+  .track-row { grid-template-columns: 44px 1fr auto; }
+  .track-acts { grid-column: auto; padding: 0; flex-wrap: nowrap; }
+}
+
+/* Material 3 Chips & Badges */
+.m3-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 28px;
+  padding: 0 0.75rem;
+  border-radius: 8px;
+  background-color: var(--md-sys-color-surface-container-high);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.m3-chip-success {
+  background-color: rgba(30, 215, 96, 0.15);
+  color: #a3f7c1;
+  border-color: rgba(30, 215, 96, 0.3);
+}
+.m3-chip-youtube {
+  background-color: rgba(255, 51, 51, 0.15);
+  color: #ff9999;
+  border-color: rgba(255, 51, 51, 0.3);
+}
+
+/* Material 3 Modal / Bottom Sheet */
+.m3-scrim {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  animation: m3-scrim-in 0.2s ease;
+}
+@keyframes m3-scrim-in { from { opacity: 0; } }
+.m3-dialog {
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  width: min(100%, 540px);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.75rem;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+}
+
+/* Material 3 Snackbar (Toasts) */
+#toasts {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 120;
+  width: min(92vw, 440px);
+}
+.m3-snackbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #e6e0e9;
+  color: #1d1a24;
+  border-radius: 16px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: m3-enter-anim 0.25s both;
+}
+.m3-snackbar.err { background-color: #ffdad6; color: #410002; }
+.m3-snackbar.succ { background-color: #c4eed0; color: #053818; }
+.m3-snackbar.out { opacity: 0; transform: translateY(8px); transition: 0.25s; }
+
+.mini-equalizer {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  width: 14px;
+}
+.mini-equalizer span {
+  width: 3px;
+  background-color: currentColor;
+  border-radius: 2px;
+  animation: mini-eq-anim 0.8s ease-in-out infinite alternate;
+}
+.mini-equalizer span:nth-child(1) { height: 40%; animation-delay: -0.2s; }
+.mini-equalizer span:nth-child(2) { height: 90%; animation-delay: -0.4s; }
+.mini-equalizer span:nth-child(3) { height: 60%; animation-delay: -0.1s; }
+@keyframes mini-eq-anim { from { height: 25%; } to { height: 100%; } }
+
+.hidden { display: none !important; }
 </style>
 </head>
-<body class="min-h-screen">
+<body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-sp" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M5.8 9.2c4.2-1.2 8.6-.8 12.4 1.3M6.6 12.6c3.5-.9 7-.5 10.2 1.2M7.4 15.8c2.7-.6 5.3-.3 7.8.9" fill="none" stroke="var(--cut)" stroke-width="1.7" stroke-linecap="round"/></symbol>
   <symbol id="i-yt" viewBox="0 0 24 24"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="currentColor"/><path d="M10 8.9v6.2l5.3-3.1z" fill="var(--cut)"/></symbol>
 </svg>
 
-<main class="max-w-2xl mx-auto px-4 pt-[max(2rem,env(safe-area-inset-top))] pb-24">
-  <header class="flex items-center justify-between mb-6 enter">
+<main class="max-w-2xl mx-auto px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-24">
+
+  <!-- ===================================================================
+       YENİLENMİŞ MATERIAL DESIGN 3 TOP APP BAR & HEADER
+       =================================================================== -->
+  <header class="flex items-center justify-between mb-6 pb-2 border-b border-[var(--md-sys-color-outline-variant)]/20 m3-enter">
     <div class="flex items-center gap-3">
-      <div class="w-12 h-12 rounded-2xl grid place-items-center" style="background:var(--pr-c);color:var(--on-pr-c)">
-        <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 23h26M5 23c0-8 5-13 11-13s11 5 11 13M10 23v-6M16 23v-9M22 23v-6"/></svg>
+      <!-- Modern Dalga / Köprü Logosu (M3 Container) -->
+      <div class="w-11 h-11 rounded-2xl grid place-items-center bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)] shadow-inner">
+        <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M4 22h24M6 22c0-7.5 4.5-12 10-12s10 4.5 10 12M11 22v-5M16 22v-8M21 22v-5"/>
+        </svg>
       </div>
       <div>
-        <h1 class="text-2xl font-extrabold tracking-tight leading-none">BridgeMusic</h1>
-        <p class="text-sm mt-1" style="color:var(--mut)">Playlistini iki platform arasında taşı. Giriş yok, anahtar yok.</p>
+        <div class="flex items-center gap-2">
+          <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--md-sys-color-on-surface)] leading-tight">BridgeMusic</h1>
+          <span class="m3-chip text-[10px] h-5 px-2 bg-[var(--md-sys-color-surface-container-high)] text-[var(--md-sys-color-primary)]">PRO</span>
+        </div>
+        <p class="text-xs text-[var(--md-sys-color-on-surface-variant)] leading-tight mt-0.5">Spotify & YouTube Kesintisiz Oynatma Listesi Taşıyıcı</p>
       </div>
     </div>
-    <button id="btn-settings" class="ib" title="Ayarlar / API (İsteğe Bağlı)" aria-label="Ayarlar">
-      <span class="ms">settings</span>
-    </button>
+
+    <!-- Sağ Üst Eylem Araçları (Minimal Telegram + Oturum & Ayarlar) -->
+    <div class="flex items-center gap-1.5 sm:gap-2">
+      <!-- Minimalist Telegram Hap Butonu -->
+      <a id="tg" href="https://t.me/BridgeMusic" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[var(--md-sys-color-surface-container-high)] hover:bg-[var(--md-sys-color-surface-container-highest)] text-[var(--md-sys-color-on-surface)] border border-[var(--md-sys-color-outline-variant)]/40 transition-colors" title="Telegram Kanalımız">
+        <span class="ms text-sm" style="color:#29b6f6">send</span>
+        <span class="hidden sm:inline">Kanal</span>
+      </a>
+
+      <!-- Oturum & Hesaplar Butonu -->
+      <button id="btn-accounts-open" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[var(--md-sys-color-secondary-container)] text-[var(--md-sys-color-on-secondary-container)] hover:opacity-90 transition-opacity">
+        <span class="ms text-base" id="acc-header-icon">account_circle</span>
+        <span id="acc-header-label">Hesaplar</span>
+      </button>
+
+      <!-- Ayarlar İkonu -->
+      <button id="btn-settings-open" class="m3-icon-btn" title="Ayarlar & API">
+        <span class="ms">settings</span>
+      </button>
+    </div>
   </header>
 
-  <!-- Telegram Kanal Bağlantısı -->
-  <a id="tg" href="https://t.me/BridgeMusic" target="_blank" rel="noopener" class="btn-card card flex items-center gap-4 p-4 mb-5 enter" style="background:var(--pr-c);color:var(--on-pr-c);text-decoration:none;animation-delay:.05s">
-    <span class="w-12 h-12 rounded-full grid place-items-center" style="background:var(--pr);color:var(--on-pr)"><span class="ms f">send</span></span>
-    <span class="flex-1 min-w-0"><b class="block">Telegram Kanalımıza Katılın</b><span class="text-sm" style="opacity:.8">Güncellemeler ve yeni özellikler</span></span>
-    <span class="ms">arrow_outward</span>
-  </a>
-
-  <section class="card p-5 enter" style="animation-delay:.1s">
-    <div id="seg" class="seg" role="tablist">
-      <i></i>
-      <button id="t-sy" role="tab" aria-selected="true"><svg class="logo" style="color:var(--sp)"><use href="#i-sp"/></svg>Spotify<span class="ms" style="font-size:18px">arrow_forward</span><svg class="logo" style="color:var(--yt)"><use href="#i-yt"/></svg></button>
-      <button id="t-ys" role="tab" aria-selected="false"><svg class="logo" style="color:var(--yt)"><use href="#i-yt"/></svg>YouTube<span class="ms" style="font-size:18px">arrow_forward</span><svg class="logo" style="color:var(--sp)"><use href="#i-sp"/></svg></button>
+  <!-- ===================================================================
+       BAĞLI HESAP DURUM ŞERİDİ (OTURUM BİLGİSİ)
+       =================================================================== -->
+  <div id="accounts-strip" class="mb-4 p-3 rounded-2xl bg-[var(--md-sys-color-surface-container-low)] border border-[var(--md-sys-color-outline-variant)]/30 flex flex-wrap items-center justify-between gap-2.5 text-xs">
+    <div class="flex items-center gap-2">
+      <span class="ms text-sm text-[var(--md-sys-color-primary)]">sync</span>
+      <span class="font-medium text-[var(--md-sys-color-on-surface-variant)]">Aktarım Modu:</span>
+      <span id="strip-sp-badge" class="m3-chip"><span class="w-2 h-2 rounded-full bg-stone-500"></span>Spotify: Bağlı Değil</span>
+      <span id="strip-yt-badge" class="m3-chip"><span class="w-2 h-2 rounded-full bg-stone-500"></span>YouTube: Bağlı Değil</span>
     </div>
-    <label id="lbl" for="url" class="block text-sm mt-5 mb-2 ml-2" style="color:var(--mut)"></label>
-    <div class="field">
-      <span class="ms" style="color:var(--mut)">link</span>
+    <button id="btn-quick-login" class="text-[var(--md-sys-color-primary)] hover:underline font-semibold flex items-center gap-1">
+      <span>Hesap Girişi Yap</span>
+      <span class="ms text-sm">arrow_forward</span>
+    </button>
+  </div>
+
+  <!-- ===================================================================
+       ANA DÖNÜŞTÜRÜCÜ KARTI
+       =================================================================== -->
+  <section class="m3-card p-5 sm:p-6 mb-4 m3-enter" style="animation-delay:.05s">
+    <div id="seg" class="m3-segmented" role="tablist">
+      <div class="m3-segmented-indicator"></div>
+      <button id="t-sy" role="tab" aria-selected="true">
+        <svg class="w-5 h-5" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg>
+        Spotify <span class="ms text-base">arrow_forward</span>
+        <svg class="w-5 h-5" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg> YouTube
+      </button>
+      <button id="t-ys" role="tab" aria-selected="false">
+        <svg class="w-5 h-5" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg>
+        YouTube <span class="ms text-base">arrow_forward</span>
+        <svg class="w-5 h-5" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg> Spotify
+      </button>
+    </div>
+
+    <label id="lbl" for="url" class="block text-xs font-semibold text-[var(--md-sys-color-on-surface-variant)] mt-5 mb-2 ml-2"></label>
+    <div class="m3-text-field">
+      <span class="ms text-[var(--md-sys-color-outline)]">link</span>
       <input id="url" type="url" autocomplete="off" spellcheck="false">
-      <button id="paste" class="ib" title="Yapıştır" aria-label="Yapıştır"><span class="ms">content_paste</span></button>
+      <button id="paste" class="m3-icon-btn" title="Panodan Yapıştır" aria-label="Yapıştır">
+        <span class="ms">content_paste</span>
+      </button>
     </div>
-    <button id="go" class="btn b-fill w-full mt-4" style="height:52px;font-size:1rem"><span class="ms">swap_horiz</span>Dönüştür</button>
+
+    <button id="go" class="m3-btn m3-btn-filled w-full mt-4 h-12 text-base font-bold shadow-md">
+      <span class="ms text-xl">swap_horiz</span>Dönüştür ve Hazırla
+    </button>
   </section>
 
-  <!-- Yükleniyor Göstergesi -->
-  <section id="load" class="card-lo hidden p-8 mt-4 text-center enter">
-    <div class="eq" aria-hidden="true"><b style="--i:0"></b><b style="--i:1"></b><b style="--i:2"></b><b style="--i:3"></b><b style="--i:4"></b><b style="--i:5"></b><b style="--i:6"></b><b style="--i:7"></b><b style="--i:8"></b></div>
-    <p id="stage" class="mt-5 font-semibold pulse"></p>
-    <p class="text-sm mt-1" style="color:var(--mut)">Halka açık servisler deneniyor, birkaç saniye sürebilir.</p>
+  <!-- ===================================================================
+       YÜKLENİYOR BÖLÜMÜ
+       =================================================================== -->
+  <section id="load" class="m3-card-low hidden p-8 text-center m3-enter">
+    <div class="m3-eq" aria-hidden="true">
+      <b style="--i:0"></b><b style="--i:1"></b><b style="--i:2"></b><b style="--i:3"></b><b style="--i:4"></b><b style="--i:5"></b><b style="--i:6"></b><b style="--i:7"></b><b style="--i:8"></b>
+    </div>
+    <p id="stage" class="mt-4 font-bold text-base text-[var(--md-sys-color-primary)] m3-pulse"></p>
+    <p class="text-xs text-[var(--md-sys-color-on-surface-variant)] mt-1">Playlist taranıyor ve şarkılar platformlar arası eşleştiriliyor...</p>
   </section>
 
-  <!-- Sonuçlar ve Aktarma Merkezi -->
-  <section id="res" class="card hidden p-4 sm:p-5 mt-4">
-    <!-- Playlist Başlık ve Bilgileri -->
-    <div class="flex items-start gap-3 px-1 mb-3">
-      <div class="w-12 h-12 rounded-2xl grid place-items-center" style="background:var(--sec-c);color:var(--on-pr-c)"><span class="ms f">queue_music</span></div>
+  <!-- ===================================================================
+       SONUÇLAR VE OYNATMA LİSTESİ AKTARMA MERKEZİ
+       =================================================================== -->
+  <section id="res" class="m3-card hidden p-4 sm:p-6 mb-8">
+    <!-- Playlist Başlık Kartı -->
+    <div class="flex items-start gap-3.5 px-1 mb-4">
+      <div class="w-12 h-12 rounded-2xl grid place-items-center bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)]">
+        <span class="ms f text-2xl">queue_music</span>
+      </div>
       <div class="min-w-0 flex-1">
-        <h2 id="ptitle" class="text-lg font-bold truncate"></h2>
+        <h2 id="ptitle" class="text-lg sm:text-xl font-bold truncate text-[var(--md-sys-color-on-surface)]"></h2>
         <div class="flex flex-wrap items-center gap-2 mt-1">
-          <span id="pcount" class="chip"><span class="ms" style="font-size:16px">music_note</span><span></span></span>
-          <span id="target-platform" class="chip"></span>
+          <span id="pcount" class="m3-chip"><span class="ms text-sm">music_note</span><span></span></span>
+          <span id="target-platform" class="m3-chip font-semibold"></span>
         </div>
       </div>
     </div>
 
-    <!-- OYNATMA LİSTESİ AKTARMA MERKEZİ (Transfer Hub) -->
-    <div id="transfer-hub" class="card-lo p-4 sm:p-5 mb-4 border border-[#ffffff15] relative overflow-hidden">
+    <!-- OYNATMA LİSTESİ AKTARMA KUTUSU (TUNEMYMUSIC RAKİBİ MERKEZ) -->
+    <div id="transfer-hub" class="p-4 sm:p-5 rounded-2xl bg-[var(--md-sys-color-surface-container-low)] border border-[var(--md-sys-color-outline-variant)]/40 mb-5 relative overflow-hidden">
       <div class="flex items-center justify-between gap-3 mb-2">
         <div class="flex items-center gap-2.5">
-          <span class="w-8 h-8 rounded-full grid place-items-center bg-[var(--pr-c)] text-[var(--on-pr-c)]"><span class="ms f text-lg">auto_mode</span></span>
+          <span class="w-9 h-9 rounded-full grid place-items-center bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)]">
+            <span class="ms f text-lg">rocket_launch</span>
+          </span>
           <div>
             <h3 class="font-bold text-sm sm:text-base leading-tight">Oynatma Listesi Olarak Aktar</h3>
-            <p id="hub-sub" class="text-xs text-[var(--mut)]">Tüm şarkıları tek bir oynatma listesi hâlinde taşıyın.</p>
+            <p id="hub-sub" class="text-xs text-[var(--md-sys-color-on-surface-variant)]">Mobil ve masaüstünde tek hamlede kütüphanenize kaydedin.</p>
           </div>
         </div>
-        <button id="btn-re-match" class="btn b-out b-sm hidden" title="Eşleştirmeyi Yenile"><span class="ms text-sm">sync</span>Yenile</button>
+        <button id="btn-re-match" class="m3-btn m3-btn-outlined m3-btn-sm text-xs hidden" title="Eşleştirmeyi Yenile">
+          <span class="ms text-xs">sync</span>Yenile
+        </button>
       </div>
 
-      <!-- Eşleştirme İlerleme Çubuğu -->
+      <!-- Canlı Eşleştirme / İlerleme Çubuğu -->
       <div id="match-box" class="mt-3 mb-3">
-        <div class="flex items-center justify-between text-xs mb-1.5" style="color:var(--mut)">
+        <div class="flex items-center justify-between text-xs mb-1.5 text-[var(--md-sys-color-on-surface-variant)]">
           <span id="match-status" class="flex items-center gap-1.5 font-medium">
             <span class="ms text-sm animate-spin">sync</span> Şarkılar hedef platformla eşleştiriliyor...
           </span>
-          <span id="match-pct" class="font-bold text-[var(--on)]">0%</span>
+          <span id="match-pct" class="font-bold text-[var(--md-sys-color-on-surface)]">0%</span>
         </div>
-        <div class="w-full h-2 rounded-full bg-[var(--s-hi2)] overflow-hidden">
-          <div id="match-bar" class="h-full rounded-full transition-all duration-300" style="width:0%;background:linear-gradient(90deg,var(--pr),var(--sp))"></div>
+        <div class="w-full h-2 rounded-full bg-[var(--md-sys-color-surface-container-highest)] overflow-hidden">
+          <div id="match-bar" class="h-full rounded-full transition-all duration-300" style="width:0%;background:linear-gradient(90deg,var(--md-sys-color-primary),var(--brand-spotify))"></div>
         </div>
       </div>
 
-      <!-- Dinamik Oynatma Listesi Butonları -->
+      <!-- Dinamik Eylem Butonları (Hesap Bağlantılı veya Doğrudan) -->
       <div id="hub-actions" class="flex flex-col gap-2.5 mt-3">
-        <!-- JS ile dinamik olarak doldurulur -->
+        <!-- JS ile dinamik oluşturulur -->
       </div>
 
-      <!-- Bilgi İpucu Kutusu -->
-      <div id="hub-tip" class="mt-3 p-3 rounded-xl bg-[var(--s-high)]/60 border border-[#ffffff0a] text-xs leading-relaxed" style="color:var(--mut)">
-        <!-- JS ile dinamik ipucu -->
+      <!-- Başarılı Aktarım Kartı (Tamamlandığında Gösterilir) -->
+      <div id="success-transfer-card" class="hidden mt-3 p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30">
+        <div class="flex items-center gap-2.5 text-emerald-400 font-bold text-sm mb-1.5">
+          <span class="ms f text-lg">check_circle</span>
+          <span id="succ-card-title">Oynatma Listesi Hesabınıza Eklendi!</span>
+        </div>
+        <p id="succ-card-desc" class="text-xs text-emerald-200/80 mb-3"></p>
+        <div class="flex items-center gap-2">
+          <a id="succ-open-link" href="#" target="_blank" rel="noopener" class="m3-btn m3-btn-filled m3-btn-sm font-bold">
+            <span class="ms text-sm">open_in_new</span>Uygulamada Aç
+          </a>
+          <button id="succ-copy-link" class="m3-btn m3-btn-outlined m3-btn-sm">
+            <span class="ms text-sm">content_copy</span>Bağlantıyı Kopyala
+          </button>
+        </div>
+      </div>
+
+      <!-- İpucu ve Bilgilendirme Notu -->
+      <div id="hub-tip" class="mt-3 p-3 rounded-xl bg-[var(--md-sys-color-surface-container-high)] text-xs text-[var(--md-sys-color-on-surface-variant)] leading-relaxed">
+        <!-- JS dinamik ipucu -->
       </div>
     </div>
 
-    <!-- Hızlı Eylem Çubuğu -->
+    <!-- Hızlı Araç Çubuğu (Kopyala, İndir, TuneMyMusic) -->
     <div class="flex flex-wrap items-center gap-2 px-1 mb-3">
-      <button id="btn-copy-menu" class="btn b-tonal b-sm"><span class="ms text-sm">content_copy</span>Listeyi Kopyala</button>
-      <button id="btn-dl-menu" class="btn b-tonal b-sm"><span class="ms text-sm">download</span>İndir (.m3u8 / .csv)</button>
-      <button id="btn-tunemy" class="btn b-out b-sm"><span class="ms text-sm">sync_alt</span>TuneMyMusic</button>
-      <button id="openall" class="btn b-out b-sm"><span class="ms text-sm">open_in_new</span>İlk 10’u Aç</button>
+      <button id="btn-copy-menu" class="m3-btn m3-btn-tonal m3-btn-sm"><span class="ms text-sm">content_copy</span>Listeyi Kopyala</button>
+      <button id="btn-dl-menu" class="m3-btn m3-btn-tonal m3-btn-sm"><span class="ms text-sm">download</span>İndir (.m3u8 / .csv)</button>
+      <button id="btn-tunemy" class="m3-btn m3-btn-outlined m3-btn-sm"><span class="ms text-sm">sync_alt</span>TuneMyMusic</button>
+      <button id="openall" class="m3-btn m3-btn-outlined m3-btn-sm"><span class="ms text-sm">open_in_new</span>İlk 10’u Aç</button>
     </div>
 
-    <!-- Şarkı Listesi Arama / Filtre -->
-    <div class="flex items-center gap-2 px-1 mb-2">
-      <div class="field flex-1 h-10 px-3 bg-[var(--s-low)] text-xs">
-        <span class="ms text-sm" style="color:var(--mut)">search</span>
-        <input id="filter-input" type="text" placeholder="Şarkılarda filtrele..." class="text-xs">
-        <button id="clear-filter" class="ib hidden" style="width:28px;height:28px"><span class="ms text-sm">close</span></button>
+    <!-- Şarkı Arama / Filtreleme Çubuğu -->
+    <div class="px-1 mb-3">
+      <div class="m3-text-field h-10 px-3 bg-[var(--md-sys-color-surface-container-low)] text-xs">
+        <span class="ms text-base text-[var(--md-sys-color-outline)]">search</span>
+        <input id="filter-input" type="text" placeholder="Şarkı veya sanatçı filtrele..." class="text-xs">
+        <button id="clear-filter" class="m3-icon-btn hidden" style="width:28px;height:28px"><span class="ms text-sm">close</span></button>
       </div>
     </div>
 
-    <!-- Parça Listesi -->
+    <!-- Şarkı Listesi -->
     <div id="list"></div>
   </section>
 
-  <p class="text-xs mt-6 px-2 leading-relaxed" style="color:var(--mut)">
-    <b>💡 Nasıl çalışır?</b> Spotify'dan YouTube'a aktarırken şarkılar YouTube üzerinde eşleştirilir ve YouTube'un dahili çoklu oynatma listesi motoruyla tek tıkla açılabilir geçici playliste çevrilir. Açılan ekranda "Kaydet (+)" butonuna basarak kütüphanenize ekleyebilirsiniz. YouTube'dan Spotify'a aktarırken liste panoya kopyalanır ve Spotify masaüstü/web uygulamasında yeni çalma listesine <b>Ctrl + V</b> ile anında yapıştırılır.
-  </p>
 </main>
 
-<!-- Modallar -->
-<!-- 1. Spotify Aktarma Rehberi Modalı -->
-<div id="modal-sp-guide" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <div class="flex items-center justify-between pb-3 border-b border-[#ffffff15] mb-4">
+<!-- ===================================================================
+     MODAL 1: HESAP VE OTURUM YÖNETİMİ (SPOTIFY & GOOGLE/YOUTUBE OAUTH)
+     =================================================================== -->
+<div id="modal-accounts" class="m3-scrim hidden" role="dialog" aria-modal="true">
+  <div class="m3-dialog">
+    <div class="flex items-center justify-between pb-3 border-b border-[var(--md-sys-color-outline-variant)]/30 mb-4">
       <div class="flex items-center gap-2.5">
-        <span class="w-8 h-8 rounded-full grid place-items-center bg-[var(--sp)] text-[var(--on-sp)]"><span class="ms f text-lg">playlist_add</span></span>
-        <h3 class="font-bold text-base">Spotify'a 3 Adımda Aktar</h3>
+        <span class="w-8 h-8 rounded-full grid place-items-center bg-[var(--md-sys-color-primary-container)] text-[var(--md-sys-color-on-primary-container)]">
+          <span class="ms f text-lg">manage_accounts</span>
+        </span>
+        <h3 class="font-bold text-base">Hesap Bağlantıları (Oturum Açma)</h3>
       </div>
-      <button id="close-sp-guide" class="ib"><span class="ms">close</span></button>
+      <button id="close-accounts" class="m3-icon-btn"><span class="ms">close</span></button>
+    </div>
+
+    <p class="text-xs text-[var(--md-sys-color-on-surface-variant)] mb-4">
+      Hesaplarınızı bağlayarak mobil veya masaüstünde çalma listelerinizi <b>tek tıkla doğrudan kendi kütüphanenize</b> oluşturabilirsiniz.
+    </p>
+
+    <!-- Spotify Kartı -->
+    <div class="p-4 rounded-2xl bg-[var(--md-sys-color-surface-container)] border border-[var(--md-sys-color-outline-variant)]/40 mb-3.5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <svg class="w-6 h-6" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg>
+          <div>
+            <b class="block text-sm">Spotify Hesabı</b>
+            <span id="modal-sp-status" class="text-xs text-[var(--md-sys-color-on-surface-variant)]">Bağlı değil</span>
+          </div>
+        </div>
+        <div id="modal-sp-avatar" class="w-8 h-8 rounded-full bg-[var(--md-sys-color-surface-container-high)] hidden overflow-hidden">
+          <img src="" alt="" class="w-full h-full object-cover">
+        </div>
+      </div>
+
+      <!-- Spotify Giriş Alanı -->
+      <div id="sp-login-controls" class="space-y-2 mt-3">
+        <div class="text-[11px] text-[var(--md-sys-color-on-surface-variant)]">
+          Kendi Spotify Client ID'niz varsa girin veya doğrudan token yapıştırın:
+        </div>
+        <div class="m3-text-field h-10 px-3 text-xs bg-[var(--md-sys-color-surface-container-highest)]">
+          <input id="sp-client-id-input" type="text" placeholder="Spotify Client ID (İsteğe bağlı)">
+        </div>
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button id="btn-login-spotify-oauth" class="m3-btn m3-btn-spotify m3-btn-sm font-bold flex-1">
+            <span class="ms text-sm">login</span>Spotify ile Giriş Yap (OAuth)
+          </button>
+          <button id="btn-prompt-sp-token" class="m3-btn m3-btn-outlined m3-btn-sm text-xs">
+            <span class="ms text-sm">key</span>Token Yapıştır
+          </button>
+        </div>
+      </div>
+
+      <!-- Spotify Bağlıyken -->
+      <div id="sp-logged-controls" class="hidden flex items-center justify-between pt-2">
+        <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1">
+          <span class="ms text-sm">check_circle</span> Oturum Açık
+        </span>
+        <button id="btn-logout-spotify" class="m3-btn m3-btn-outlined m3-btn-sm text-xs text-rose-300 border-rose-800">
+          Çıkış Yap
+        </button>
+      </div>
+    </div>
+
+    <!-- YouTube / Google Kartı -->
+    <div class="p-4 rounded-2xl bg-[var(--md-sys-color-surface-container)] border border-[var(--md-sys-color-outline-variant)]/40 mb-3.5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <svg class="w-6 h-6" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg>
+          <div>
+            <b class="block text-sm">YouTube / Google Hesabı</b>
+            <span id="modal-yt-status" class="text-xs text-[var(--md-sys-color-on-surface-variant)]">Bağlı değil</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTube Giriş Alanı -->
+      <div id="yt-login-controls" class="space-y-2 mt-3">
+        <div class="text-[11px] text-[var(--md-sys-color-on-surface-variant)]">
+          Google Client ID veya YouTube Erişim Tokeni girin:
+        </div>
+        <div class="m3-text-field h-10 px-3 text-xs bg-[var(--md-sys-color-surface-container-highest)]">
+          <input id="yt-client-id-input" type="text" placeholder="Google Client ID veya OAuth Token">
+        </div>
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button id="btn-login-google-oauth" class="m3-btn m3-btn-youtube m3-btn-sm font-bold flex-1">
+            <span class="ms text-sm">login</span>Google ile Giriş Yap
+          </button>
+          <button id="btn-prompt-yt-token" class="m3-btn m3-btn-outlined m3-btn-sm text-xs">
+            <span class="ms text-sm">key</span>Token Yapıştır
+          </button>
+        </div>
+      </div>
+
+      <!-- YouTube Bağlıyken -->
+      <div id="yt-logged-controls" class="hidden flex items-center justify-between pt-2">
+        <span class="text-xs text-red-400 font-semibold flex items-center gap-1">
+          <span class="ms text-sm">check_circle</span> Oturum Açık
+        </span>
+        <button id="btn-logout-youtube" class="m3-btn m3-btn-outlined m3-btn-sm text-xs text-rose-300 border-rose-800">
+          Çıkış Yap
+        </button>
+      </div>
+    </div>
+
+    <div class="pt-2 text-right">
+      <button id="btn-accounts-done" class="m3-btn m3-btn-tonal m3-btn-sm">Tamam</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     MODAL 2: SPOTIFY MASAÜSTÜ REHBERİ (CTRL+V YÖNTEMİ)
+     =================================================================== -->
+<div id="modal-sp-guide" class="m3-scrim hidden" role="dialog" aria-modal="true">
+  <div class="m3-dialog">
+    <div class="flex items-center justify-between pb-3 border-b border-[var(--md-sys-color-outline-variant)]/30 mb-4">
+      <div class="flex items-center gap-2.5">
+        <span class="w-8 h-8 rounded-full grid place-items-center bg-[var(--brand-spotify)] text-[var(--brand-spotify-on)]">
+          <span class="ms f text-lg">playlist_add</span>
+        </span>
+        <h3 class="font-bold text-base">Spotify Masaüstü / Web Aktarımı</h3>
+      </div>
+      <button id="close-sp-guide" class="m3-icon-btn"><span class="ms">close</span></button>
     </div>
     <div class="space-y-3.5 text-sm">
-      <div class="p-3 rounded-xl bg-[#3ddc8418] border border-[#3ddc8433] flex items-center gap-3">
-        <span class="ms f text-[var(--sp)] text-2xl">check_circle</span>
-        <span class="font-semibold text-sm">Tüm şarkılar panonuza başarıyla kopyalandı!</span>
+      <div class="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex items-center gap-3">
+        <span class="ms f text-[var(--brand-spotify)] text-2xl">check_circle</span>
+        <span class="font-semibold text-xs sm:text-sm text-emerald-200">Tüm şarkılar Spotify bağlantısı biçiminde panonuza kopyalandı!</span>
       </div>
-      <ol class="space-y-3 pl-2 text-sm text-[var(--on)]">
+      <ol class="space-y-2.5 pl-2 text-xs sm:text-sm text-[var(--md-sys-color-on-surface)]">
         <li class="flex items-start gap-2.5">
-          <span class="w-6 h-6 rounded-full bg-[var(--s-high)] grid place-items-center text-xs font-bold shrink-0">1</span>
-          <div><b>Spotify uygulamasını</b> (Masaüstü veya Web) açın.</div>
+          <span class="w-6 h-6 rounded-full bg-[var(--md-sys-color-surface-container)] grid place-items-center text-xs font-bold shrink-0">1</span>
+          <div><b>Spotify uygulamasını</b> (veya Web Player'ı) açın.</div>
         </li>
         <li class="flex items-start gap-2.5">
-          <span class="w-6 h-6 rounded-full bg-[var(--s-high)] grid place-items-center text-xs font-bold shrink-0">2</span>
+          <span class="w-6 h-6 rounded-full bg-[var(--md-sys-color-surface-container)] grid place-items-center text-xs font-bold shrink-0">2</span>
           <div>Sol menüden <b>"Çalma Listesi Oluştur"</b> butonuna basarak yeni bir boş liste açın.</div>
         </li>
         <li class="flex items-start gap-2.5">
-          <span class="w-6 h-6 rounded-full bg-[var(--s-high)] grid place-items-center text-xs font-bold shrink-0">3</span>
-          <div>Listenin ortasındaki boş alana tıklayıp klavyenizden <kbd class="px-2 py-0.5 rounded bg-[var(--s-high)] font-mono text-xs border border-[#ffffff20]">Ctrl + V</kbd> (Mac'te <kbd class="px-2 py-0.5 rounded bg-[var(--s-high)] font-mono text-xs border border-[#ffffff20]">Cmd + V</kbd>) yapın!</div>
+          <span class="w-6 h-6 rounded-full bg-[var(--md-sys-color-surface-container)] grid place-items-center text-xs font-bold shrink-0">3</span>
+          <div>Listenin ortasındaki boş alana tıklayıp klavyenizden <kbd class="px-2 py-0.5 rounded bg-[var(--md-sys-color-surface-container-highest)] font-mono text-xs border border-white/20">Ctrl + V</kbd> (Mac: <kbd class="px-2 py-0.5 rounded bg-[var(--md-sys-color-surface-container-highest)] font-mono text-xs border border-white/20">Cmd + V</kbd>) yapın!</div>
         </li>
       </ol>
-      <div class="p-3 rounded-xl bg-[var(--s-high)] text-xs text-[var(--mut)]">
-        ✨ <b>İpucu:</b> Spotify masaüstü uygulaması panodaki şarkı bağlantılarını doğrudan algılar ve tüm listeyi saniyeler içinde ekler.
+      <div class="p-3 rounded-xl bg-[var(--md-sys-color-surface-container)] text-xs text-[var(--md-sys-color-on-surface-variant)]">
+        ✨ <b>İpucu:</b> Spotify masaüstü istemcisi panodaki URL ve URI listesini anında algılar ve tüm listeyi saniyeler içinde ekler.
       </div>
     </div>
-    <div class="flex items-center justify-end gap-2 mt-5 pt-3 border-t border-[#ffffff15]">
-      <a href="https://open.spotify.com" target="_blank" rel="noopener" class="btn b-fill b-sm" style="background:var(--sp);color:var(--on-sp)"><span class="ms text-sm">open_in_new</span>Spotify Web'i Aç</a>
-      <button id="ok-sp-guide" class="btn b-tonal b-sm">Tamamdır</button>
+    <div class="flex items-center justify-end gap-2 mt-5 pt-3 border-t border-[var(--md-sys-color-outline-variant)]/30">
+      <a href="https://open.spotify.com" target="_blank" rel="noopener" class="m3-btn m3-btn-spotify m3-btn-sm font-bold">
+        <span class="ms text-sm">open_in_new</span>Spotify Web'i Aç
+      </a>
+      <button id="ok-sp-guide" class="m3-btn m3-btn-tonal m3-btn-sm">Tamamdır</button>
     </div>
   </div>
 </div>
 
-<!-- 2. Kopyalama Menüsü Modalı -->
-<div id="modal-copy" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <div class="flex items-center justify-between pb-3 border-b border-[#ffffff15] mb-4">
+<!-- ===================================================================
+     MODAL 3: KOPYALAMA MENÜSÜ
+     =================================================================== -->
+<div id="modal-copy" class="m3-scrim hidden" role="dialog" aria-modal="true">
+  <div class="m3-dialog">
+    <div class="flex items-center justify-between pb-3 border-b border-[var(--md-sys-color-outline-variant)]/30 mb-4">
       <h3 class="font-bold text-base flex items-center gap-2"><span class="ms">content_copy</span>Listeyi Kopyala</h3>
-      <button id="close-copy" class="ib"><span class="ms">close</span></button>
+      <button id="close-copy" class="m3-icon-btn"><span class="ms">close</span></button>
     </div>
-    <p class="text-xs text-[var(--mut)] mb-3">Hangi biçimde kopyalamak istediğinizi seçin:</p>
     <div class="flex flex-col gap-2">
-      <button id="copy-fmt-clean" class="btn b-tonal justify-start text-left h-auto py-2.5 px-3 rounded-xl">
+      <button id="copy-fmt-clean" class="m3-btn m3-btn-tonal justify-start text-left h-auto py-2.5 px-3 rounded-2xl">
         <span class="ms text-lg">format_list_bulleted</span>
-        <div><b class="block text-sm">Sanatçı - Şarkı Adı</b><span class="text-xs opacity-75">Standart metin listesi, her satırda bir şarkı</span></div>
+        <div><b class="block text-sm">Sanatçı - Şarkı Adı</b><span class="text-xs opacity-75">Her satırda bir şarkı</span></div>
       </button>
-      <button id="copy-fmt-sp" class="btn b-tonal justify-start text-left h-auto py-2.5 px-3 rounded-xl">
-        <span class="ms text-lg" style="color:var(--sp)">link</span>
-        <div><b class="block text-sm">Spotify Bağlantıları / URI'leri</b><span class="text-xs opacity-75">Spotify masaüstü uygulamasına Ctrl+V ile yapıştırmak için</span></div>
+      <button id="copy-fmt-sp" class="m3-btn m3-btn-tonal justify-start text-left h-auto py-2.5 px-3 rounded-2xl">
+        <span class="ms text-lg" style="color:var(--brand-spotify)">link</span>
+        <div><b class="block text-sm">Spotify Bağlantıları / URI'leri</b><span class="text-xs opacity-75">Spotify masaüstüne Ctrl+V ile yapıştırmak için</span></div>
       </button>
-      <button id="copy-fmt-yt" class="btn b-tonal justify-start text-left h-auto py-2.5 px-3 rounded-xl">
-        <span class="ms text-lg" style="color:var(--yt)">smart_display</span>
-        <div><b class="block text-sm">YouTube Video Bağlantıları</b><span class="text-xs opacity-75">Her şarkının doğrudan YouTube izleme linki</span></div>
+      <button id="copy-fmt-yt" class="m3-btn m3-btn-tonal justify-start text-left h-auto py-2.5 px-3 rounded-2xl">
+        <span class="ms text-lg" style="color:var(--brand-youtube)">smart_display</span>
+        <div><b class="block text-sm">YouTube Video Bağlantıları</b><span class="text-xs opacity-75">Doğrudan video izleme linkleri</span></div>
       </button>
     </div>
   </div>
 </div>
 
-<!-- 3. İndirme Menüsü Modalı -->
-<div id="modal-dl" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <div class="flex items-center justify-between pb-3 border-b border-[#ffffff15] mb-4">
+<!-- ===================================================================
+     MODAL 4: İNDİRME MENÜSÜ (.M3U8 / .CSV / .TXT)
+     =================================================================== -->
+<div id="modal-dl" class="m3-scrim hidden" role="dialog" aria-modal="true">
+  <div class="m3-dialog">
+    <div class="flex items-center justify-between pb-3 border-b border-[var(--md-sys-color-outline-variant)]/30 mb-4">
       <h3 class="font-bold text-base flex items-center gap-2"><span class="ms">download</span>Oynatma Listesini İndir</h3>
-      <button id="close-dl" class="ib"><span class="ms">close</span></button>
+      <button id="close-dl" class="m3-icon-btn"><span class="ms">close</span></button>
     </div>
-    <p class="text-xs text-[var(--mut)] mb-3">Desteklenen bir oynatma listesi dosyası formatı seçin:</p>
     <div class="flex flex-col gap-2">
-      <button id="dl-m3u" class="btn b-tonal justify-start text-left h-auto py-2.5 px-3 rounded-xl">
-        <span class="ms text-lg text-[var(--pr)]">queue_music</span>
-        <div><b class="block text-sm">.M3U8 Oynatma Listesi</b><span class="text-xs opacity-75">VLC, Apple Music, Foobar2000 ve tüm oynatıcılar için evrensel format</span></div>
+      <button id="dl-m3u" class="m3-btn m3-btn-tonal justify-start text-left h-auto py-2.5 px-3 rounded-2xl">
+        <span class="ms text-lg text-[var(--md-sys-color-primary)]">queue_music</span>
+        <div><b class="block text-sm">.M3U8 Oynatma Listesi</b><span class="text-xs opacity-75">VLC, Apple Music ve tüm oynatıcılar için evrensel format</span></div>
       </button>
-      <button id="dl-csv" class="btn b-tonal justify-start text-left h-auto py-2.5 px-3 rounded-xl">
-        <span class="ms text-lg text-[var(--te)]">table_chart</span>
-        <div><b class="block text-sm">.CSV Tablo Dosyası</b><span class="text-xs opacity-75">Excel, Google Sheets ve aktarma araçları (Soundiiz/TuneMyMusic) için</span></div>
+      <button id="dl-csv" class="m3-btn m3-btn-tonal justify-start text-left h-auto py-2.5 px-3 rounded-2xl">
+        <span class="ms text-lg text-[var(--md-sys-color-tertiary)]">table_chart</span>
+        <div><b class="block text-sm">.CSV Tablo Dosyası</b><span class="text-xs opacity-75">Excel, Soundiiz, TuneMyMusic için Türkçe karakter korumalı</span></div>
       </button>
-      <button id="dl-txt" class="btn b-tonal justify-start text-left h-auto py-2.5 px-3 rounded-xl">
+      <button id="dl-txt" class="m3-btn m3-btn-tonal justify-start text-left h-auto py-2.5 px-3 rounded-2xl">
         <span class="ms text-lg">description</span>
-        <div><b class="block text-sm">.TXT Düz Metin</b><span class="text-xs opacity-75">Sanatçı ve şarkı isimlerinden oluşan sade metin dosyası</span></div>
+        <div><b class="block text-sm">.TXT Düz Metin</b><span class="text-xs opacity-75">Sade metin formatında şarkı ve sanatçı isimleri</span></div>
       </button>
     </div>
   </div>
 </div>
 
-<!-- 4. Ayarlar & API Modalı (İsteğe Bağlı) -->
-<div id="modal-settings" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <div class="flex items-center justify-between pb-3 border-b border-[#ffffff15] mb-4">
+<!-- ===================================================================
+     MODAL 5: AYARLAR (API KOTALARI & GELİŞMİŞ)
+     =================================================================== -->
+<div id="modal-settings" class="m3-scrim hidden" role="dialog" aria-modal="true">
+  <div class="m3-dialog">
+    <div class="flex items-center justify-between pb-3 border-b border-[var(--md-sys-color-outline-variant)]/30 mb-4">
       <div class="flex items-center gap-2">
         <span class="ms text-lg">settings</span>
-        <h3 class="font-bold text-base">API Ayarları (İsteğe Bağlı)</h3>
+        <h3 class="font-bold text-base">Ayarlar & Özel API Anahtarları</h3>
       </div>
-      <button id="close-settings" class="ib"><span class="ms">close</span></button>
+      <button id="close-settings" class="m3-icon-btn"><span class="ms">close</span></button>
     </div>
-    <p class="text-xs text-[var(--mut)] mb-4">
-      BridgeMusic varsayılan olarak <b>giriş ve anahtar gerektirmeden</b> halka açık servisler üzerinden çalışır. Kendi API kotalarınızı kullanmak isterseniz aşağıdaki alanları doldurabilirsiniz:
-    </p>
-    <div class="space-y-3">
+    <div class="space-y-3 text-xs text-[var(--md-sys-color-on-surface-variant)]">
       <div>
-        <label class="block text-xs font-semibold mb-1" for="set-yt-key">YouTube Data API v3 Anahtarı</label>
-        <div class="field h-11 px-3 text-xs bg-[var(--s-low)]">
-          <input id="set-yt-key" type="password" placeholder="AIzaSy..." class="text-xs">
+        <label class="block font-semibold mb-1 text-[var(--md-sys-color-on-surface)]" for="set-yt-key">YouTube Data API v3 Anahtarı</label>
+        <div class="m3-text-field h-10 px-3 bg-[var(--md-sys-color-surface-container-highest)]">
+          <input id="set-yt-key" type="password" placeholder="AIzaSy...">
         </div>
       </div>
       <div>
-        <label class="block text-xs font-semibold mb-1" for="set-sp-client">Spotify Client ID</label>
-        <div class="field h-11 px-3 text-xs bg-[var(--s-low)]">
-          <input id="set-sp-client" type="text" placeholder="İsteğe bağlı..." class="text-xs">
+        <label class="block font-semibold mb-1 text-[var(--md-sys-color-on-surface)]" for="set-sp-client">Spotify Client ID</label>
+        <div class="m3-text-field h-10 px-3 bg-[var(--md-sys-color-surface-container-highest)]">
+          <input id="set-sp-client" type="text" placeholder="Spotify App Client ID">
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-between mt-6 pt-3 border-t border-[#ffffff15]">
-      <button id="clear-settings" class="btn b-out b-sm text-xs">Sıfırla</button>
-      <div class="flex gap-2">
-        <button id="save-settings" class="btn b-fill b-sm text-xs">Kaydet</button>
-      </div>
+    <div class="flex items-center justify-between mt-6 pt-3 border-t border-[var(--md-sys-color-outline-variant)]/30">
+      <button id="clear-settings" class="m3-btn m3-btn-outlined m3-btn-sm text-xs">Sıfırla</button>
+      <button id="save-settings" class="m3-btn m3-btn-filled m3-btn-sm text-xs font-bold">Kaydet</button>
     </div>
   </div>
 </div>
@@ -348,12 +895,16 @@ body{color:var(--on);font-family:Figtree,"Segoe UI",system-ui,sans-serif;
 <audio id="audio-preview" preload="none"></audio>
 
 <script>
+/* ===================================================================
+   BRIDGEMUSIC JAVASCRIPT ÇEKİRDEĞİ (OAUTH + VERİ ÇEKME + AKTARIM)
+   =================================================================== */
 const $=id=>document.getElementById(id);
 let mode='sy',tracks=[],filteredTracks=[];
 let currentPreviewIndex=-1;
 let matchController=null;
 let matchActive=false;
 
+/* Açık Kaynak Proxy ve API Ağ Geçitleri */
 const PROXIES=[
   u=>'https://corsproxy.io/?'+encodeURIComponent(u),
   u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),
@@ -381,7 +932,7 @@ function toast(m,type='norm'){
   const t=document.createElement('div');
   const isErr=type==='err'||type===1;
   const isSucc=type==='succ';
-  t.className='toast'+(isErr?' err':(isSucc?' succ':''));
+  t.className='m3-snackbar'+(isErr?' err':(isSucc?' succ':''));
   const icon=isErr?'error':(isSucc?'check_circle':'info');
   t.innerHTML=`<span class="ms f">${icon}</span><span>${esc(m)}</span>`;
   $('toasts').appendChild(t);
@@ -400,7 +951,204 @@ const gj=async(u,ms)=>(await get(u,ms)).json();
 const gt=async(u,ms)=>(await get(u,ms)).text();
 const any=ps=>Promise.any(ps);
 
-/* ---------- Ayarlar (LocalStorage) ---------- */
+/* ---------- HESAP YÖNETİMİ & OAUTH 2.0 İŞLEMLERİ ---------- */
+let spotifyUser=null;
+let youtubeUser=null;
+
+function getStoredSpotifyToken(){
+  const token=localStorage.getItem('bm_sp_token');
+  const exp=parseInt(localStorage.getItem('bm_sp_exp')||'0',10);
+  if(token&&(!exp||Date.now()<exp))return token;
+  return null;
+}
+function getStoredYouTubeToken(){
+  return localStorage.getItem('bm_yt_token')||null;
+}
+
+async function checkSpotifyAuth(){
+  const token=getStoredSpotifyToken();
+  if(!token){
+    spotifyUser=null;
+    updateAccountUI();
+    return;
+  }
+  try{
+    const r=await fetch('https://api.spotify.com/v1/me',{
+      headers:{'Authorization':`Bearer ${token}`}
+    });
+    if(r.ok){
+      spotifyUser=await r.json();
+    }else{
+      localStorage.removeItem('bm_sp_token');
+      spotifyUser=null;
+    }
+  }catch(e){
+    spotifyUser=null;
+  }
+  updateAccountUI();
+}
+
+async function checkYouTubeAuth(){
+  const token=getStoredYouTubeToken();
+  if(!token){
+    youtubeUser=null;
+    updateAccountUI();
+    return;
+  }
+  try{
+    const r=await fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true',{
+      headers:{'Authorization':`Bearer ${token}`}
+    });
+    if(r.ok){
+      const d=await r.json();
+      if(d.items&&d.items[0]){
+        youtubeUser={
+          name:d.items[0].snippet.title,
+          avatar:d.items[0].snippet.thumbnails?.default?.url
+        };
+      }else{
+        youtubeUser={name:'YouTube Hesabı'};
+      }
+    }else{
+      localStorage.removeItem('bm_yt_token');
+      youtubeUser=null;
+    }
+  }catch(e){
+    youtubeUser=null;
+  }
+  updateAccountUI();
+}
+
+function updateAccountUI(){
+  // Üst şerit badge'leri
+  if(spotifyUser){
+    $('strip-sp-badge').className='m3-chip m3-chip-success';
+    $('strip-sp-badge').innerHTML=`<span class="w-2 h-2 rounded-full bg-[var(--brand-spotify)]"></span>Spotify: ${esc(spotifyUser.display_name||'Bağlı')}`;
+    $('sp-login-controls').classList.add('hidden');
+    $('sp-logged-controls').classList.remove('hidden');
+    $('modal-sp-status').textContent=`Oturum Açık (${spotifyUser.display_name||'Kullanıcı'})`;
+  }else{
+    $('strip-sp-badge').className='m3-chip';
+    $('strip-sp-badge').innerHTML='<span class="w-2 h-2 rounded-full bg-stone-500"></span>Spotify: Bağlı Değil';
+    $('sp-login-controls').classList.remove('hidden');
+    $('sp-logged-controls').classList.add('hidden');
+    $('modal-sp-status').textContent='Bağlı değil';
+  }
+
+  if(youtubeUser){
+    $('strip-yt-badge').className='m3-chip m3-chip-youtube';
+    $('strip-yt-badge').innerHTML=`<span class="w-2 h-2 rounded-full bg-[var(--brand-youtube)]"></span>YouTube: ${esc(youtubeUser.name||'Bağlı')}`;
+    $('yt-login-controls').classList.add('hidden');
+    $('yt-logged-controls').classList.remove('hidden');
+    $('modal-yt-status').textContent=`Oturum Açık (${youtubeUser.name||'Kanal'})`;
+  }else{
+    $('strip-yt-badge').className='m3-chip';
+    $('strip-yt-badge').innerHTML='<span class="w-2 h-2 rounded-full bg-stone-500"></span>YouTube: Bağlı Değil';
+    $('yt-login-controls').classList.remove('hidden');
+    $('yt-logged-controls').classList.add('hidden');
+    $('modal-yt-status').textContent='Bağlı değil';
+  }
+
+  if(spotifyUser||youtubeUser){
+    $('acc-header-icon').classList.add('text-emerald-400');
+    $('acc-header-label').textContent=spotifyUser?spotifyUser.display_name:(youtubeUser?youtubeUser.name:'Hesap');
+  }else{
+    $('acc-header-icon').classList.remove('text-emerald-400');
+    $('acc-header-label').textContent='Hesaplar';
+  }
+
+  if(tracks.length){
+    renderHubButtons();
+  }
+}
+
+/* OAuth URL Yönlendirmesini Yakalama (Hash Parametreleri) */
+function handleAuthRedirect(){
+  if(window.location.hash){
+    const params=new URLSearchParams(window.location.hash.substring(1));
+    const token=params.get('access_token');
+    const state=params.get('state');
+
+    if(token){
+      if(state&&state.startsWith('google_')){
+        localStorage.setItem('bm_yt_token',token);
+        toast('Google / YouTube hesabı başarıyla bağlandı!','succ');
+        checkYouTubeAuth();
+      }else{
+        localStorage.setItem('bm_sp_token',token);
+        const exp=parseInt(params.get('expires_in')||'3600',10)*1000;
+        localStorage.setItem('bm_sp_exp',Date.now()+exp);
+        toast('Spotify hesabı başarıyla bağlandı!','succ');
+        checkSpotifyAuth();
+      }
+      window.history.replaceState(null,'',window.location.pathname+window.location.search);
+    }
+  }
+}
+
+/* Spotify ile Giriş (Implicit Grant PKCE) */
+$('btn-login-spotify-oauth').onclick=()=>{
+  const clientId=$('sp-client-id-input').value.trim()||localStorage.getItem('bm_sp_client_id')||'901cb001f2f84b568ce48b0a501bf000';
+  localStorage.setItem('bm_sp_client_id',clientId);
+  const redirectUri=window.location.origin+window.location.pathname;
+  const scopes=['playlist-modify-public','playlist-modify-private','user-read-private'].join(' ');
+  const authUrl=`https://accounts.spotify.com/authorize?client_id=${encodeURIComponent(clientId)}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&show_dialog=true`;
+  window.location.href=authUrl;
+};
+$('btn-prompt-sp-token').onclick=()=>{
+  const t=prompt('Spotify Access Token (Bearer olmadan yapıştırın):');
+  if(t&&t.trim()){
+    localStorage.setItem('bm_sp_token',t.trim());
+    localStorage.setItem('bm_sp_exp',Date.now()+3600*1000);
+    toast('Spotify tokeni kaydedildi.','succ');
+    checkSpotifyAuth();
+  }
+};
+$('btn-logout-spotify').onclick=()=>{
+  localStorage.removeItem('bm_sp_token');
+  localStorage.removeItem('bm_sp_exp');
+  spotifyUser=null;
+  updateAccountUI();
+  toast('Spotify oturumu kapatıldı.');
+};
+
+/* Google / YouTube Giriş */
+$('btn-login-google-oauth').onclick=()=>{
+  const clientId=$('yt-client-id-input').value.trim()||localStorage.getItem('bm_yt_client_id')||'';
+  if(!clientId){
+    const inputId=prompt('Google Cloud Console\'dan aldığınız Web Client ID\'nizi girin:');
+    if(!inputId)return;
+    localStorage.setItem('bm_yt_client_id',inputId.trim());
+  }
+  const cid=localStorage.getItem('bm_yt_client_id');
+  const redirectUri=window.location.origin+window.location.pathname;
+  const scope='https://www.googleapis.com/auth/youtube';
+  const state='google_'+Math.random().toString(36).substring(2,9);
+  const authUrl=`https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(cid)}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}&state=${encodeURIComponent(state)}&prompt=consent`;
+  window.location.href=authUrl;
+};
+$('btn-prompt-yt-token').onclick=()=>{
+  const t=prompt('YouTube OAuth Access Token:');
+  if(t&&t.trim()){
+    localStorage.setItem('bm_yt_token',t.trim());
+    toast('YouTube tokeni kaydedildi.','succ');
+    checkYouTubeAuth();
+  }
+};
+$('btn-logout-youtube').onclick=()=>{
+  localStorage.removeItem('bm_yt_token');
+  youtubeUser=null;
+  updateAccountUI();
+  toast('YouTube oturumu kapatıldı.');
+};
+
+/* Modal Açma / Kapama */
+$('btn-accounts-open').onclick=()=>$('modal-accounts').classList.remove('hidden');
+$('btn-quick-login').onclick=()=>$('modal-accounts').classList.remove('hidden');
+$('close-accounts').onclick=()=>$('modal-accounts').classList.add('hidden');
+$('btn-accounts-done').onclick=()=>$('modal-accounts').classList.add('hidden');
+
+/* ---------- AYARLAR MODALI ---------- */
 function loadSettings(){
   try{
     const s=JSON.parse(localStorage.getItem('bridge_settings')||'{}');
@@ -409,27 +1157,17 @@ function loadSettings(){
   }catch(e){}
 }
 function saveSettings(){
-  const s={
-    ytKey:$('set-yt-key').value.trim(),
-    spClient:$('set-sp-client').value.trim()
-  };
+  const s={ytKey:$('set-yt-key').value.trim(),spClient:$('set-sp-client').value.trim()};
   localStorage.setItem('bridge_settings',JSON.stringify(s));
   $('modal-settings').classList.add('hidden');
   toast('Ayarlar kaydedildi.','succ');
 }
-function getCustomYTKey(){
-  try{return (JSON.parse(localStorage.getItem('bridge_settings')||'{}')).ytKey||'';}catch(e){return '';}
-}
-$('btn-settings').onclick=()=>{loadSettings();$('modal-settings').classList.remove('hidden')};
+$('btn-settings-open').onclick=()=>{loadSettings();$('modal-settings').classList.remove('hidden')};
 $('close-settings').onclick=()=>$('modal-settings').classList.add('hidden');
 $('save-settings').onclick=saveSettings;
-$('clear-settings').onclick=()=>{
-  localStorage.removeItem('bridge_settings');
-  $('set-yt-key').value='';$('set-sp-client').value='';
-  toast('Ayarlar sıfırlandı.');
-};
+$('clear-settings').onclick=()=>{localStorage.removeItem('bridge_settings');$('set-yt-key').value='';$('set-sp-client').value='';toast('Sıfırlandı.');};
 
-/* ---------- Temizleme ve URL Yardımcıları ---------- */
+/* ---------- VERİ TEMİZLEME VE PARSERLER ---------- */
 function clean(t,ch){
   t=String(t||'').replace(/^\s*\d{1,3}[.)]\s+/,'')
    .replace(/\s*[\(\[\{][^\)\]\}]*(official|video|audio|lyrics?|lyrical|klip|clip|hd|hq|4k|visuali[sz]er|remaster|m[üu]zik|music|full album|explicit)[^\)\]\}]*[\)\]\}]/gi,'')
@@ -445,7 +1183,7 @@ const lineOf=t=>(t.artist?t.artist+' - ':'')+t.title;
 const spLink=t=>t.spId?'https://open.spotify.com/track/'+t.spId:'https://open.spotify.com/search/'+encodeURIComponent(q(t));
 const ytLink=t=>t.ytId?'https://www.youtube.com/watch?v='+t.ytId:'https://www.youtube.com/results?search_query='+encodeURIComponent(q(t));
 
-/* ---------- Spotify Veri Çekme ---------- */
+/* ---------- SPOTIFY VERİ OKUMA ---------- */
 function findTrackList(o,d=0){
   if(!o||typeof o!=='object'||d>14)return null;
   if(Array.isArray(o.trackList)&&o.trackList.length&&o.trackList[0]&&o.trackList[0].title!==undefined)return o;
@@ -495,12 +1233,11 @@ async function fromSpotify(link){
       if(res)break;
     }catch(e){}
   }
-  if(!res)throw new Error('Şarkılar okunamadı. Playlist herkese açık olmalı; lütfen biraz sonra tekrar deneyin.');
-  const name=res.title||await oe||'Spotify Playlist';
-  return{title:name,items:res.items};
+  if(!res)throw new Error('Spotify playlisti okunamadı. Playlistin herkese açık olduğundan emin olun.');
+  return{title:res.title||await oe||'Spotify Oynatma Listesi',items:res.items};
 }
 
-/* ---------- YouTube Veri Çekme ---------- */
+/* ---------- YOUTUBE VERİ OKUMA ---------- */
 async function ytPiped(b,id){
   const d=await gj(b+'/playlists/'+id,9000);
   let rel=d.relatedStreams||[];if(!rel.length)throw 0;
@@ -512,10 +1249,7 @@ async function ytPiped(b,id){
       next=q.nextpage;
     }catch(e){break}
   }
-  return{
-    title:d.name,
-    items:rel.map(v=>({...clean(v.title,v.uploaderName),ytId:(String(v.url||'').match(/v=([\w-]{11})/)||[])[1]}))
-  };
+  return{title:d.name,items:rel.map(v=>({...clean(v.title,v.uploaderName),ytId:(String(v.url||'').match(/v=([\w-]{11})/)||[])[1]}))};
 }
 async function ytInv(b,id,wrap){
   const f=u=>wrap?wrap(u):u;
@@ -550,7 +1284,7 @@ async function ytScrape(id){
 }
 async function fromYouTube(link){
   const m=link.match(/[?&]list=([\w-]+)/);
-  if(!m)throw new Error('Geçerli bir YouTube playlist bağlantısı değil (list= parametresi bulunamadı).');
+  if(!m)throw new Error('Geçerli bir YouTube playlist bağlantısı değil (list= parametresi eksik).');
   const id=m[1];
   try{
     const r=await any([
@@ -560,85 +1294,49 @@ async function fromYouTube(link){
       ytScrape(id)
     ]);
     r.items=r.items.filter(t=>t.title);
-    r.title=r.title||'YouTube Playlist';
+    r.title=r.title||'YouTube Oynatma Listesi';
     return r;
   }catch(e){
-    throw new Error('YouTube servislerine ulaşılamadı veya playlist özel/gizli.');
+    throw new Error('YouTube servisine erişilemedi veya playlist özel/gizli.');
   }
 }
 
-/* ---------- Şarkı Eşleştirme Motoru (Resolver) ---------- */
+/* ---------- ŞARKI EŞLEŞTİRME VE ÇÖZÜCÜ (RESOLVER) ---------- */
 async function searchYouTubeVideo(track){
   if(track.ytId)return track.ytId;
   const query=(track.artist?track.artist+' - ':'')+track.title;
   const cleanQ=query.replace(/[\(\[\{][^\)\]\}]*[\)\]\}]/g,'').trim();
 
-  // 1. Özel YouTube API Anahtarı tanımlıysa doğrudan resmi API kullan
-  const customKey=getCustomYTKey();
-  if(customKey){
-    try{
-      const d=await gj(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(cleanQ)}&type=video&maxResults=1&key=${customKey}`,5000);
-      if(d.items&&d.items[0]&&d.items[0].id&&d.items[0].id.videoId){
-        track.ytId=d.items[0].id.videoId;
-        return track.ytId;
-      }
-    }catch(e){}
-  }
-
-  // 2. Çoklu açık kaynak arama: Invidious, Piped ve YouTube Arama Kazıma (Proxy ile)
   const reqs=[];
-
-  // Invidious instances
   INV.forEach(b=>{
-    reqs.push(
-      gj(`${b}/api/v1/search?q=${encodeURIComponent(cleanQ)}&type=video`,5500).then(d=>{
-        if(!Array.isArray(d)||!d.length)throw 0;
-        const v=d.find(x=>x.videoId);
-        if(!v)throw 0;
-        return v.videoId;
-      })
-    );
+    reqs.push(gj(`${b}/api/v1/search?q=${encodeURIComponent(cleanQ)}&type=video`,5500).then(d=>{
+      const v=Array.isArray(d)?d.find(x=>x.videoId):null;
+      if(!v)throw 0;return v.videoId;
+    }));
   });
-
-  // Piped instances
   PIPED.slice(0,3).forEach(b=>{
-    reqs.push(
-      gj(`${b}/search?q=${encodeURIComponent(cleanQ)}&filter=videos`,5500).then(d=>{
-        const item=(d.items||[]).find(x=>x.url&&x.url.includes('v='));
-        if(!item)throw 0;
-        const m=item.url.match(/v=([\w-]{11})/);
-        if(!m)throw 0;
-        return m[1];
-      })
-    );
+    reqs.push(gj(`${b}/search?q=${encodeURIComponent(cleanQ)}&filter=videos`,5500).then(d=>{
+      const item=(d.items||[]).find(x=>x.url&&x.url.includes('v='));
+      if(!item)throw 0;
+      const m=item.url.match(/v=([\w-]{11})/);
+      if(!m)throw 0;return m[1];
+    }));
   });
-
-  // YouTube Arama Sonuç Sayfası Kazıma (CORS Proxy ile)
   PROXIES.slice(0,2).forEach(p=>{
-    reqs.push(
-      gt(p(`https://www.youtube.com/results?search_query=${encodeURIComponent(cleanQ)}`),6500).then(h=>{
-        const m=h.match(/"videoId":"([\w-]{11})"/);
-        if(!m)throw 0;
-        return m[1];
-      })
-    );
+    reqs.push(gt(p(`https://www.youtube.com/results?search_query=${encodeURIComponent(cleanQ)}`),6500).then(h=>{
+      const m=h.match(/"videoId":"([\w-]{11})"/);
+      if(!m)throw 0;return m[1];
+    }));
   });
 
   try{
     const id=await any(reqs);
-    if(id){
-      track.ytId=id;
-      return id;
-    }
-  }catch(e){
-    return null;
-  }
+    if(id){track.ytId=id;return id;}
+  }catch(e){return null;}
 }
 
 async function searchSpotifyMetadata(track){
-  if(track.spId)return track.spId;
   const query=(track.artist?track.artist+' - ':'')+track.title;
-  // iTunes Search API ücretsiz, anahtarsız ve doğrudan CORS desteklidir
   try{
     const d=await gj(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=1`,5000);
     if(d.results&&d.results[0]){
@@ -651,7 +1349,6 @@ async function searchSpotifyMetadata(track){
   return track.spId||null;
 }
 
-/* Eşleştirme Yöneticisi (Batch Worker Pool) */
 async function runAutoMatching(){
   if(matchActive)return;
   matchActive=true;
@@ -673,7 +1370,6 @@ async function runAutoMatching(){
 
   const concurrency=4;
   let idx=0;
-
   async function worker(){
     while(idx<toMatch.length){
       if(matchController.signal.aborted)break;
@@ -690,13 +1386,10 @@ async function runAutoMatching(){
   }
 
   const workers=[];
-  for(let i=0;i<Math.min(concurrency,toMatch.length);i++){
-    workers.push(worker());
-  }
+  for(let i=0;i<Math.min(concurrency,toMatch.length);i++)workers.push(worker());
   await Promise.all(workers);
   matchActive=false;
   renderHubButtons();
-  toast('Tüm eşleştirmeler tamamlandı!','succ');
 }
 
 function updateMatchProgress(cur,tot){
@@ -704,7 +1397,7 @@ function updateMatchProgress(cur,tot){
   $('match-pct').textContent=`${pct}% (${cur}/${tot})`;
   $('match-bar').style.width=`${pct}%`;
   if(pct>=100){
-    $('match-status').innerHTML='<span class="ms text-sm text-[var(--sp)]">check_circle</span> Şarkıların tamamı eşleştirildi!';
+    $('match-status').innerHTML='<span class="ms text-sm text-emerald-400">check_circle</span> Şarkıların tamamı eşleştirildi!';
     $('btn-re-match').classList.remove('hidden');
   }else{
     $('match-status').innerHTML='<span class="ms text-sm animate-spin">sync</span> Hedef platformla eşleştiriliyor...';
@@ -716,7 +1409,7 @@ $('btn-re-match').onclick=()=>{
   runAutoMatching();
 };
 
-/* ---------- YouTube Çoklu Oynatma Listesi URL Üretici ---------- */
+/* ---------- YOUTUBE ÇOKLU OYNATMA LİSTESİ URL ÜRETİCİSİ (SIFIR GİRİŞ) ---------- */
 function getYouTubePlaylistChunks(){
   const ids=tracks.map(t=>t.ytId).filter(Boolean);
   if(!ids.length)return[];
@@ -735,85 +1428,283 @@ function getYouTubePlaylistChunks(){
   }));
 }
 
-/* ---------- Aktarma Merkezi (Transfer Hub) Arayüzü ---------- */
+/* ===================================================================
+   DOĞRUDAN API İLE OYNATMA LİSTESİ OLUŞTURMA (MOBİL DOSTU)
+   =================================================================== */
+
+/* Spotify API ile Çalma Listesi Oluşturma */
+async function createPlaylistOnSpotify(){
+  const token=getStoredSpotifyToken();
+  if(!token){
+    $('modal-accounts').classList.remove('hidden');
+    toast('Önce Spotify hesabınıza giriş yapın.',1);
+    return;
+  }
+  if(!spotifyUser){
+    await checkSpotifyAuth();
+    if(!spotifyUser){
+      $('modal-accounts').classList.remove('hidden');
+      return toast('Spotify oturumu yenilenemedi, tekrar giriş yapın.',1);
+    }
+  }
+
+  const btn=$('btn-direct-spotify');
+  if(btn){btn.disabled=true;btn.innerHTML='<span class="ms text-xl animate-spin">sync</span> Çalma Listesi Oluşturuluyor...';}
+
+  try{
+    // 1. Çalma Listesi Oluştur
+    const plTitle=$('ptitle').textContent||'BridgeMusic Playlist';
+    const createRes=await fetch(`https://api.spotify.com/v1/users/${spotifyUser.id}/playlists`,{
+      method:'POST',
+      headers:{
+        'Authorization':`Bearer ${token}`,
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        name:plTitle,
+        description:'BridgeMusic ile aktarıldı',
+        public:true
+      })
+    });
+    if(!createRes.ok)throw new Error('Spotify çalma listesi oluşturulamadı (Kod: '+createRes.status+')');
+    const plData=await createRes.json();
+    const playlistId=plData.id;
+    const playlistUrl=plData.external_urls?.spotify||`https://open.spotify.com/playlist/${playlistId}`;
+
+    // 2. Şarkı URI'lerini Topla / Ara
+    const uris=[];
+    for(let i=0;i<tracks.length;i++){
+      const t=tracks[i];
+      if(t.spId){
+        uris.push(`spotify:track:${t.spId}`);
+      }else{
+        try{
+          const sRes=await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(lineOf(t))}&type=track&limit=1`,{
+            headers:{'Authorization':`Bearer ${token}`}
+          });
+          if(sRes.ok){
+            const sd=await sRes.json();
+            if(sd.tracks?.items?.[0]){
+              uris.push(sd.tracks.items[0].uri);
+              t.spId=sd.tracks.items[0].id;
+            }
+          }
+        }catch(e){}
+      }
+      if(btn){
+        btn.innerHTML=`<span class="ms text-xl animate-spin">sync</span> Şarkılar Ekleniyor (${uris.length}/${tracks.length})...`;
+      }
+    }
+
+    // 3. Şarkıları 100'lük gruplar halinde ekle
+    for(let i=0;i<uris.length;i+=100){
+      const chunk=uris.slice(i,i+100);
+      await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`,{
+        method:'POST',
+        headers:{
+          'Authorization':`Bearer ${token}`,
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({uris:chunk})
+      });
+    }
+
+    // Başarı Durumu
+    showTransferSuccess('Spotify',playlistUrl,uris.length);
+  }catch(e){
+    toast(e.message||'Spotify aktarımında bir hata oluştu.',1);
+  }finally{
+    if(btn){btn.disabled=false;renderHubButtons();}
+  }
+}
+
+/* YouTube API ile Oynatma Listesi Oluşturma */
+async function createPlaylistOnYouTube(){
+  const token=getStoredYouTubeToken();
+  if(!token){
+    $('modal-accounts').classList.remove('hidden');
+    toast('Önce Google / YouTube hesabınıza giriş yapın.',1);
+    return;
+  }
+
+  const btn=$('btn-direct-yt');
+  if(btn){btn.disabled=true;btn.innerHTML='<span class="ms text-xl animate-spin">sync</span> YouTube Listesi Hazırlanıyor...';}
+
+  try{
+    const plTitle=$('ptitle').textContent||'BridgeMusic Playlist';
+    const plRes=await fetch('https://www.googleapis.com/youtube/v3/playlists?part=snippet,status',{
+      method:'POST',
+      headers:{
+        'Authorization':`Bearer ${token}`,
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        snippet:{title:plTitle,description:'BridgeMusic ile aktarıldı'},
+        status:{privacyStatus:'public'}
+      })
+    });
+    if(!plRes.ok)throw new Error('YouTube çalma listesi oluşturulamadı.');
+    const plData=await plRes.json();
+    const playlistId=plData.id;
+    const playlistUrl=`https://www.youtube.com/playlist?list=${playlistId}`;
+
+    let addedCount=0;
+    for(let i=0;i<tracks.length;i++){
+      const t=tracks[i];
+      let vId=t.ytId;
+      if(!vId)vId=await searchYouTubeVideo(t);
+      if(vId){
+        try{
+          await fetch('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet',{
+            method:'POST',
+            headers:{
+              'Authorization':`Bearer ${token}`,
+              'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+              snippet:{playlistId:playlistId,resourceId:{kind:'youtube#video',videoId:vId}}
+            })
+          });
+          addedCount++;
+        }catch(e){}
+      }
+      if(btn){
+        btn.innerHTML=`<span class="ms text-xl animate-spin">sync</span> Videolar Ekleniyor (${addedCount}/${tracks.length})...`;
+      }
+    }
+
+    showTransferSuccess('YouTube',playlistUrl,addedCount);
+  }catch(e){
+    toast(e.message||'YouTube aktarımında hata oluştu.',1);
+  }finally{
+    if(btn){btn.disabled=false;renderHubButtons();}
+  }
+}
+
+function showTransferSuccess(platform,url,count){
+  $('success-transfer-card').classList.remove('hidden');
+  $('succ-card-title').textContent=`${platform} Oynatma Listesi Başarıyla Oluşturuldu!`;
+  $('succ-card-desc').textContent=`Toplam ${count} şarkı doğrudan hesabınızdaki kütüphaneye eklendi. Aşağıdaki butondan mobil veya masaüstünde listenizi hemen açabilirsiniz.`;
+  $('succ-open-link').href=url;
+  $('succ-copy-link').onclick=async()=>{
+    await copyText(url);
+    toast('Oynatma listesi bağlantısı kopyalandı!','succ');
+  };
+  $('success-transfer-card').scrollIntoView({behavior:'smooth',block:'nearest'});
+  toast(`${platform} çalma listesi hazır!`,'succ');
+}
+
+/* ---------- AKTARMA MERKEZİ BUTONLARINI DİNAMİK RENDER ETME ---------- */
 function renderHubButtons(){
   const hub=$('hub-actions');
   hub.innerHTML='';
   const chunks=getYouTubePlaylistChunks();
 
   if(mode==='sy'){
-    // Spotify -> YouTube Aktarma Butonları
+    // Spotify -> YouTube Aktarımı
+    if(youtubeUser){
+      // 1. Öncelik: Doğrudan Kullanıcı YouTube Hesabına Yazma
+      hub.innerHTML+=`
+        <button id="btn-direct-yt" class="m3-btn m3-btn-youtube w-full py-3.5 h-auto text-base font-bold shadow-lg">
+          <span class="ms text-2xl">add_to_photos</span>
+          <span>Doğrudan YouTube Hesabıma Aktar (${youtubeUser.name})</span>
+        </button>
+      `;
+      setTimeout(()=>{if($('btn-direct-yt'))$('btn-direct-yt').onclick=createPlaylistOnYouTube;},10);
+    }
+
+    // 2. Alternatif: Tek Tıkla Geçici Oynatma Listesi (Sıfır Giriş)
     if(chunks.length===1){
       const c=chunks[0];
-      hub.innerHTML=`
+      hub.innerHTML+=`
         <div class="flex flex-col sm:flex-row gap-2">
-          <a class="btn b-fill flex-1 py-3 h-auto font-bold text-base shadow-lg" style="background:var(--yt);color:#fff" target="_blank" rel="noopener" href="${c.ytUrl}">
-            <span class="ms text-2xl">playlist_play</span>YouTube Oynatma Listesi Olarak Aç
+          <a class="m3-btn m3-btn-filled flex-1 py-3 h-auto font-bold text-sm sm:text-base" style="background:var(--brand-youtube);color:#fff" target="_blank" rel="noopener" href="${c.ytUrl}">
+            <span class="ms text-xl">playlist_play</span>YouTube Oynatma Listesi Olarak Aç
           </a>
-          <a class="btn b-tonal py-3 h-auto" target="_blank" rel="noopener" href="${c.ytmUrl}" title="YouTube Music">
-            <span class="ms">music_note</span>YT Music
+          <a class="m3-btn m3-btn-tonal py-3 h-auto" target="_blank" rel="noopener" href="${c.ytmUrl}" title="YouTube Music Kuyruğu">
+            <span class="ms text-base">music_note</span>YT Music
           </a>
         </div>
       `;
     }else if(chunks.length>1){
-      // 50'den fazla şarkı varsa parçalara böl
       let partsHtml=`<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">`;
       chunks.forEach(c=>{
         partsHtml+=`
-          <a class="btn b-tonal justify-between text-left h-auto py-2.5 px-3" target="_blank" rel="noopener" href="${c.ytUrl}">
+          <a class="m3-btn m3-btn-tonal justify-between text-left h-auto py-2.5 px-3" target="_blank" rel="noopener" href="${c.ytUrl}">
             <div class="flex items-center gap-2">
-              <span class="ms text-lg" style="color:var(--yt)">playlist_play</span>
-              <div><b class="block text-sm">${c.part}. Bölüm (${c.start}-${c.end})</b><span class="text-xs text-[var(--mut)]">${c.count} şarkı</span></div>
+              <span class="ms text-lg" style="color:var(--brand-youtube)">playlist_play</span>
+              <div><b class="block text-xs sm:text-sm">${c.part}. Bölüm (${c.start}-${c.end})</b><span class="text-[11px] opacity-75">${c.count} video</span></div>
             </div>
             <span class="ms text-sm">open_in_new</span>
           </a>
         `;
       });
       partsHtml+=`</div>
-        <button id="btn-open-all-parts" class="btn b-fill w-full mt-1" style="background:var(--yt);color:#fff">
-          <span class="ms">launch</span>Tüm Bölümleri Sekmelerde Aç (${chunks.length} Bölüm)
+        <button id="btn-open-all-parts" class="m3-btn m3-btn-outlined w-full mt-1">
+          <span class="ms">launch</span>Tüm Bölümleri Aç (${chunks.length} Sekme)
         </button>
       `;
-      hub.innerHTML=partsHtml;
-      $('btn-open-all-parts').onclick=()=>{
-        chunks.forEach(c=>window.open(c.ytUrl,'_blank','noopener'));
-      };
+      hub.innerHTML+=partsHtml;
+      setTimeout(()=>{
+        if($('btn-open-all-parts')){
+          $('btn-open-all-parts').onclick=()=>{chunks.forEach(c=>window.open(c.ytUrl,'_blank','noopener'));};
+        }
+      },10);
     }else{
-      hub.innerHTML=`
-        <button id="btn-force-match" class="btn b-fill w-full py-3 h-auto font-bold" style="background:var(--yt);color:#fff">
-          <span class="ms">sync</span>Şarkıları YouTube ile Eşleştir ve Playlist Oluştur
+      hub.innerHTML+=`
+        <button id="btn-force-match" class="m3-btn m3-btn-filled w-full py-3 h-auto font-bold">
+          <span class="ms">sync</span>Şarkıları YouTube ile Eşleştir ve Listeyi Hazırla
         </button>
       `;
-      $('btn-force-match').onclick=()=>runAutoMatching();
+      setTimeout(()=>{if($('btn-force-match'))$('btn-force-match').onclick=()=>runAutoMatching();},10);
     }
 
-    // İpucu Bilgisi
     $('hub-tip').innerHTML=`
-      <b class="text-[var(--on)] block mb-1">💡 Tek Tıkla Kendi YouTube Hesabınıza Kaydedin:</b>
-      Açılan YouTube sayfasında oynatma listesi kutusundaki <b>"+" (Kaydet)</b> simgesine tıklayarak listenizi anında YouTube kütüphanenize kalıcı çalma listesi olarak kaydedebilirsiniz.
+      <b class="text-[var(--md-sys-color-on-surface)] block mb-1">💡 YouTube Oynatma Listesi İpucu:</b>
+      Açılan sayfada oynatma listesi kutusundaki <b>"+" (Kaydet)</b> butonuna tıklayarak listenizi anında YouTube kütüphanenize kalıcı çalma listesi olarak kaydedebilirsiniz.
     `;
   }else{
-    // YouTube -> Spotify Aktarma Butonları
-    hub.innerHTML=`
-      <div class="flex flex-col sm:flex-row gap-2">
-        <button id="btn-copy-spotify-all" class="btn b-fill flex-1 py-3 h-auto font-bold text-base shadow-lg" style="background:var(--sp);color:var(--on-sp)">
-          <span class="ms text-2xl">playlist_add</span>Spotify Çalma Listesine Aktar (1 Tıkla)
+    // YouTube -> Spotify Aktarımı
+    if(spotifyUser){
+      // 1. Öncelik: Doğrudan Kullanıcı Spotify Hesabına Yazma (Mobil ve Masaüstü 1-Tıkla)
+      hub.innerHTML+=`
+        <button id="btn-direct-spotify" class="m3-btn m3-btn-spotify w-full py-3.5 h-auto text-base font-bold shadow-lg">
+          <span class="ms text-2xl">add_to_photos</span>
+          <span>Doğrudan Spotify Hesabıma Aktar (${spotifyUser.display_name})</span>
         </button>
-        <a class="btn b-tonal py-3 h-auto" target="_blank" rel="noopener" href="https://open.spotify.com">
-          <span class="ms">open_in_new</span>Spotify Web
+      `;
+      setTimeout(()=>{if($('btn-direct-spotify'))$('btn-direct-spotify').onclick=createPlaylistOnSpotify;},10);
+    }else{
+      // Giriş Yapılmamışsa: Giriş Önerisi ve Alternatif Pano Yolu
+      hub.innerHTML+=`
+        <button id="btn-login-sp-hub" class="m3-btn m3-btn-spotify w-full py-3 h-auto font-bold text-sm sm:text-base">
+          <span class="ms text-xl">login</span>
+          <span>Spotify ile Giriş Yapıp Doğrudan Hesaba Aktar</span>
+        </button>
+      `;
+      setTimeout(()=>{if($('btn-login-sp-hub'))$('btn-login-sp-hub').onclick=()=>$('modal-accounts').classList.remove('hidden');},10);
+    }
+
+    // Pano ile Toplu Aktar (Masaüstü Ctrl+V)
+    hub.innerHTML+=`
+      <div class="flex flex-col sm:flex-row gap-2 mt-1">
+        <button id="btn-copy-spotify-all" class="m3-btn m3-btn-tonal flex-1 py-3 h-auto font-semibold text-xs sm:text-sm">
+          <span class="ms text-lg">content_copy</span>Spotify Pano Aktarımı (Ctrl+V)
+        </button>
+        <a class="m3-btn m3-btn-outlined py-3 h-auto" target="_blank" rel="noopener" href="https://open.spotify.com">
+          <span class="ms text-sm">open_in_new</span>Spotify Web
         </a>
       </div>
     `;
-    $('btn-copy-spotify-all').onclick=copyForSpotify;
+    setTimeout(()=>{if($('btn-copy-spotify-all'))$('btn-copy-spotify-all').onclick=copyForSpotify;},10);
 
     $('hub-tip').innerHTML=`
-      <b class="text-[var(--on)] block mb-1">💡 Spotify'a 1 Tıkla Toplu Aktarma:</b>
-      Yukarıdaki <b>"Spotify Çalma Listesine Aktar"</b> butonuna basın; liste anında panoya kopyalanır. Spotify'da (Masaüstü veya Web) yeni veya boş bir çalma listesi açıp <kbd class="px-1.5 py-0.5 rounded bg-[var(--s-hi2)] font-mono text-[11px]">Ctrl + V</kbd> yapın. Tüm şarkılar aynı anda listenize eklenir!
+      <b class="text-[var(--md-sys-color-on-surface)] block mb-1">💡 Spotify Mobil & Masaüstü Kolaylığı:</b>
+      ${spotifyUser ? 'Spotify hesabınız bağlı olduğu için yukarıdaki butona tıklayarak listenizi tek hamlede telefonunuzdaki Spotify uygulamasına ekleyebilirsiniz.' : 'Mobil cihazda doğrudan kütüphanenize eklemek için <b>Spotify ile Giriş Yapın</b>. Masaüstündeyseniz <b>"Spotify Pano Aktarımı"</b> butonuna basıp yeni bir çalma listesine <b>Ctrl + V</b> yapabilirsiniz.'}
     `;
   }
 }
 
-/* Spotify için Kopyalama ve Rehber Modalı */
 async function copyForSpotify(){
   const spLines=tracks.map(t=>{
     if(t.spId)return `https://open.spotify.com/track/${t.spId}`;
@@ -825,15 +1716,16 @@ async function copyForSpotify(){
 $('close-sp-guide').onclick=()=>$('modal-sp-guide').classList.add('hidden');
 $('ok-sp-guide').onclick=()=>$('modal-sp-guide').classList.add('hidden');
 
-/* ---------- UI & Filtreleme ---------- */
+/* ---------- UI VE SEKMELER ---------- */
 function setMode(m){
   mode=m;
-  $('seg').classList.toggle('ys',m==='ys');
+  $('seg').classList.toggle('is-yt-to-sp',m==='ys');
   $('t-sy').setAttribute('aria-selected',m==='sy');
   $('t-ys').setAttribute('aria-selected',m==='ys');
   $('lbl').textContent=m==='sy'?'Spotify playlist bağlantısı':'YouTube playlist bağlantısı';
   $('url').placeholder=m==='sy'?'https://open.spotify.com/playlist/…':'https://www.youtube.com/playlist?list=…';
   $('res').classList.add('hidden');
+  $('success-transfer-card').classList.add('hidden');
   if(matchController)matchController.abort();
   matchActive=false;
 }
@@ -856,47 +1748,47 @@ function render(r){
   $('ptitle').textContent=r.title;
   $('pcount').lastChild.textContent=tracks.length+' şarkı';
   $('target-platform').textContent=mode==='sy'?'Hedef: YouTube':'Hedef: Spotify';
-  $('target-platform').className='chip '+(mode==='sy'?'chip-warn':'chip-ok');
+  $('target-platform').className='m3-chip '+(mode==='sy'?'m3-chip-youtube':'m3-chip-success');
 
   $('filter-input').value='';
   renderList(filteredTracks);
   renderHubButtons();
 
   $('res').classList.remove('hidden');
-  $('res').classList.remove('enter');
+  $('res').classList.remove('m3-enter');
   void $('res').offsetWidth;
-  $('res').classList.add('enter');
+  $('res').classList.add('m3-enter');
   $('res').scrollIntoView({behavior:'smooth',block:'start'});
 
-  // Otomatik eşleştirme sürecini arka planda başlat
+  // Otomatik eşleştirme motorunu arka planda başlat
   runAutoMatching();
 }
 
 function renderList(list){
-  const spLogo='<svg class="logo" style="color:var(--sp)"><use href="#i-sp"/></svg>';
-  const ytLogo='<svg class="logo" style="color:var(--yt)"><use href="#i-yt"/></svg>';
+  const spLogo='<svg class="w-4 h-4" style="color:var(--brand-spotify)"><use href="#i-sp"/></svg>';
+  const ytLogo='<svg class="w-4 h-4" style="color:var(--brand-youtube)"><use href="#i-yt"/></svg>';
 
   $('list').innerHTML=list.map((t,i)=>{
     const origIdx=tracks.indexOf(t);
     const hasYt=Boolean(t.ytId);
     return `
-      <div class="row" id="row-${origIdx}" style="--d:${Math.min(i,14)}">
-        <div class="av" id="av-${origIdx}">
+      <div class="track-row" id="row-${origIdx}" style="--d:${Math.min(i,14)}">
+        <div class="track-avatar" id="av-${origIdx}">
           ${t.artwork?`<img src="${esc(t.artwork)}" alt="" loading="lazy">`:''}
           <span class="ms f" style="${t.artwork?'opacity:0':''}">${hasYt?'play_circle':'music_note'}</span>
         </div>
         <div class="min-w-0">
-          <div class="truncate font-semibold text-sm sm:text-base">${esc(t.title)}</div>
-          <div class="truncate text-xs sm:text-sm flex items-center gap-2" style="color:var(--mut)">
+          <div class="truncate font-semibold text-sm sm:text-base text-[var(--md-sys-color-on-surface)]">${esc(t.title)}</div>
+          <div class="truncate text-xs flex items-center gap-2 text-[var(--md-sys-color-on-surface-variant)]">
             <span>${esc(t.artist||'Bilinmeyen sanatçı')}</span>
-            ${hasYt?'<span class="chip chip-ok" style="height:18px;font-size:10px;padding:0 4px">YT Hazır</span>':''}
+            ${hasYt?'<span class="m3-chip m3-chip-success" style="height:18px;font-size:10px;padding:0 5px">YT Eşleşti</span>':''}
           </div>
         </div>
-        <div class="acts">
-          <button class="ib btn-play" data-idx="${origIdx}" title="30sn Önizleme Dinle"><span class="ms text-lg">play_arrow</span></button>
-          <a id="sp-btn-${origIdx}" class="btn b-tonal b-sm" target="_blank" rel="noopener" href="${spLink(t)}">${spLogo}Spotify</a>
-          <a id="yt-btn-${origIdx}" class="btn b-tonal b-sm" target="_blank" rel="noopener" href="${ytLink(t)}">${ytLogo}YouTube</a>
-          <button class="ib btn-copy-row" data-idx="${origIdx}" title="Satırı kopyala"><span class="ms text-lg">content_copy</span></button>
+        <div class="track-acts">
+          <button class="m3-icon-btn btn-play" data-idx="${origIdx}" title="30sn Önizleme Dinle"><span class="ms text-lg">play_arrow</span></button>
+          <a id="sp-btn-${origIdx}" class="m3-btn m3-btn-tonal m3-btn-sm" target="_blank" rel="noopener" href="${spLink(t)}">${spLogo}Spotify</a>
+          <a id="yt-btn-${origIdx}" class="m3-btn m3-btn-tonal m3-btn-sm" target="_blank" rel="noopener" href="${ytLink(t)}">${ytLogo}YouTube</a>
+          <button class="m3-icon-btn btn-copy-row" data-idx="${origIdx}" title="Satırı kopyala"><span class="ms text-base">content_copy</span></button>
         </div>
       </div>
     `;
@@ -907,13 +1799,9 @@ function updateRowUI(t){
   const idx=tracks.indexOf(t);
   if(idx===-1)return;
   const ytBtn=$(`yt-btn-${idx}`);
-  if(ytBtn&&t.ytId){
-    ytBtn.href='https://www.youtube.com/watch?v='+t.ytId;
-  }
+  if(ytBtn&&t.ytId)ytBtn.href='https://www.youtube.com/watch?v='+t.ytId;
   const spBtn=$(`sp-btn-${idx}`);
-  if(spBtn&&t.spId){
-    spBtn.href='https://open.spotify.com/track/'+t.spId;
-  }
+  if(spBtn&&t.spId)spBtn.href='https://open.spotify.com/track/'+t.spId;
   const av=$(`av-${idx}`);
   if(av&&t.artwork&&!av.querySelector('img')){
     const img=document.createElement('img');
@@ -929,10 +1817,7 @@ $('filter-input').oninput=e=>{
   if(!val){
     filteredTracks=tracks;
   }else{
-    filteredTracks=tracks.filter(t=>
-      (t.title||'').toLowerCase().includes(val)||
-      (t.artist||'').toLowerCase().includes(val)
-    );
+    filteredTracks=tracks.filter(t=>(t.title||'').toLowerCase().includes(val)||(t.artist||'').toLowerCase().includes(val));
   }
   renderList(filteredTracks);
 };
@@ -955,14 +1840,13 @@ $('list').addEventListener('click',async e=>{
   if(currentPreviewIndex===idx&&!audio.paused){
     audio.pause();
     playBtn.innerHTML='<span class="ms text-lg">play_arrow</span>';
-    row.classList.remove('playing');
+    row.classList.remove('is-active-preview');
     currentPreviewIndex=-1;
     return;
   }
 
-  // Önceki çalanı sıfırla
   document.querySelectorAll('.btn-play').forEach(b=>b.innerHTML='<span class="ms text-lg">play_arrow</span>');
-  document.querySelectorAll('.row.playing').forEach(r=>r.classList.remove('playing'));
+  document.querySelectorAll('.track-row.is-active-preview').forEach(r=>r.classList.remove('is-active-preview'));
 
   if(!t.previewUrl){
     playBtn.innerHTML='<span class="ms text-sm animate-spin">sync</span>';
@@ -973,8 +1857,8 @@ $('list').addEventListener('click',async e=>{
     audio.src=t.previewUrl;
     audio.play();
     currentPreviewIndex=idx;
-    row.classList.add('playing');
-    playBtn.innerHTML='<span class="mini-eq"><span></span><span></span><span></span></span>';
+    row.classList.add('is-active-preview');
+    playBtn.innerHTML='<span class="mini-equalizer"><span></span><span></span><span></span></span>';
   }else{
     playBtn.innerHTML='<span class="ms text-lg">play_arrow</span>';
     toast('Bu şarkı için ses önizlemesi bulunamadı.');
@@ -982,7 +1866,7 @@ $('list').addEventListener('click',async e=>{
 });
 audio.onended=()=>{
   document.querySelectorAll('.btn-play').forEach(b=>b.innerHTML='<span class="ms text-lg">play_arrow</span>');
-  document.querySelectorAll('.row.playing').forEach(r=>r.classList.remove('playing'));
+  document.querySelectorAll('.track-row.is-active-preview').forEach(r=>r.classList.remove('is-active-preview'));
   currentPreviewIndex=-1;
 };
 
@@ -995,28 +1879,16 @@ $('list').addEventListener('click',e=>{
   toast('Şarkı kopyalandı.');
 });
 
-/* ---------- Kopyalama & İndirme & Dışa Aktarma ---------- */
+/* ---------- KOPYALAMA & İNDİRME FONKSİYONLARI ---------- */
 async function copyText(s){
-  try{
-    await navigator.clipboard.writeText(s);
-  }catch(e){
-    const a=document.createElement('textarea');
-    a.value=s;
-    document.body.appendChild(a);
-    a.select();
-    document.execCommand('copy');
-    a.remove();
+  try{await navigator.clipboard.writeText(s);}catch(e){
+    const a=document.createElement('textarea');a.value=s;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();
   }
 }
 function downloadBlob(blob,filename){
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=filename;
-  a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);
 }
 
-/* Kopyalama Menüsü */
 $('btn-copy-menu').onclick=()=>$('modal-copy').classList.remove('hidden');
 $('close-copy').onclick=()=>$('modal-copy').classList.add('hidden');
 $('copy-fmt-clean').onclick=async()=>{
@@ -1037,17 +1909,13 @@ $('copy-fmt-yt').onclick=async()=>{
   toast('YouTube bağlantıları panoya kopyalandı.','succ');
 };
 
-/* İndirme Menüsü */
 $('btn-dl-menu').onclick=()=>$('modal-dl').classList.remove('hidden');
 $('close-dl').onclick=()=>$('modal-dl').classList.add('hidden');
-
-// M3U8 İndir
 $('dl-m3u').onclick=()=>{
   const title=$('ptitle').textContent||'BridgeMusic_Playlist';
   let m3u='#EXTM3U\n#EXTENC:UTF-8\n#PLAYLIST:'+title+'\n\n';
   tracks.forEach(t=>{
-    const name=lineOf(t);
-    m3u+=`#EXTINF:-1,${name}\n`;
+    m3u+=`#EXTINF:-1,${lineOf(t)}\n`;
     if(t.ytId)m3u+=`https://www.youtube.com/watch?v=${t.ytId}\n`;
     else if(t.spId)m3u+=`https://open.spotify.com/track/${t.spId}\n`;
     else m3u+=ytLink(t)+'\n';
@@ -1056,22 +1924,16 @@ $('dl-m3u').onclick=()=>{
   $('modal-dl').classList.add('hidden');
   toast('.M3U8 Oynatma listesi indirildi.','succ');
 };
-
-// CSV İndir
 $('dl-csv').onclick=()=>{
   const title=$('ptitle').textContent||'BridgeMusic_Playlist';
   let csv='\uFEFF"No","Sanatçı","Şarkı","Spotify Link","YouTube Link"\n';
   tracks.forEach((t,i)=>{
-    const art=(t.artist||'').replace(/"/g,'""');
-    const tit=(t.title||'').replace(/"/g,'""');
-    csv+=`"${i+1}","${art}","${tit}","${spLink(t)}","${ytLink(t)}"\n`;
+    csv+=`"${i+1}","${(t.artist||'').replace(/"/g,'""')}","${(t.title||'').replace(/"/g,'""')}","${spLink(t)}","${ytLink(t)}"\n`;
   });
   downloadBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}),sanitize(title)+'.csv');
   $('modal-dl').classList.add('hidden');
   toast('CSV listesi indirildi.','succ');
 };
-
-// TXT İndir
 $('dl-txt').onclick=()=>{
   const title=$('ptitle').textContent||'BridgeMusic_Playlist';
   downloadBlob(new Blob([tracks.map(lineOf).join('\n')],{type:'text/plain;charset=utf-8'}),sanitize(title)+'.txt');
@@ -1079,7 +1941,6 @@ $('dl-txt').onclick=()=>{
   toast('Metin dosyası indirildi.','succ');
 };
 
-/* TuneMyMusic Entegrasyonu */
 $('btn-tunemy').onclick=async()=>{
   await copyText(tracks.map(lineOf).join('\n'));
   const target=mode==='sy'?'https://www.tunemymusic.com/transfer/freetext-to-youtube':'https://www.tunemymusic.com/transfer/freetext-to-spotify';
@@ -1087,7 +1948,6 @@ $('btn-tunemy').onclick=async()=>{
   toast('Şarkı listesi kopyalandı! TuneMyMusic ekranına yapıştırarak aktarabilirsiniz.','succ');
 };
 
-/* İlk 10'u Aç */
 $('openall').onclick=()=>{
   const n=Math.min(tracks.length,10);
   const f=mode==='sy'?ytLink:spLink;
@@ -1095,15 +1955,16 @@ $('openall').onclick=()=>{
   tracks.slice(0,n).forEach(t=>window.open(f(t),'_blank','noopener'));
 };
 
-/* ---------- Dönüştürme Başlatıcı ---------- */
+/* ---------- DÖNÜŞTÜRME BAŞLATICI ---------- */
 const stages={
-  sy:['Spotify playlisti bulunuyor…','Şarkı listesi okunuyor…','Parçalar ayrıştırılıyor…'],
-  ys:['YouTube playlisti bulunuyor…','Videolar taranıyor…','Başlıklar filtreleniyor…']
+  sy:['Spotify playlisti taranıyor…','Şarkı listesi okunuyor…','Parçalar ayrıştırılıyor…'],
+  ys:['YouTube playlisti taranıyor…','Videolar ayrıştırılıyor…','Başlıklar filtreleniyor…']
 };
 $('go').onclick=async()=>{
   const link=$('url').value.trim();
   if(!link)return toast('Önce bir playlist bağlantısı yapıştırın.',1);
   $('res').classList.add('hidden');
+  $('success-transfer-card').classList.add('hidden');
   $('load').classList.remove('hidden');
   $('go').disabled=true;
   if(matchController)matchController.abort();
@@ -1126,6 +1987,13 @@ $('go').onclick=async()=>{
   }
 };
 $('url').addEventListener('keydown',e=>{if(e.key==='Enter')$('go').click()});
+
+/* Sayfa İlk Yüklendiğinde Oturum ve Parametre Kontrolleri */
+window.addEventListener('DOMContentLoaded',()=>{
+  handleAuthRedirect();
+  checkSpotifyAuth();
+  checkYouTubeAuth();
+});
 </script>
 </body>
 </html>
